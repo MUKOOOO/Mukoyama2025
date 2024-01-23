@@ -28,11 +28,30 @@ void Game::Init()
 	Simple3d().Load();
 	Goal().Load();
 
+	//ブロックが配置される可能性のある位置を登録
+	for (int horizontal = 0; horizontal < 4; horizontal++)
+	{
+		for (int vertically = 0; vertically < 5; vertically++)
+		{
+			m_BlockPosition[horizontal * 10 + vertically * 2] = D3DXVECTOR3(horizontal * 3 + 2, 0.0f, vertically * 3);
+			m_BlockPosition[horizontal * 10 + vertically * 2 + 1] = D3DXVECTOR3(horizontal * 3 + 2, 0.0f, vertically * 3 + 1);
+		}
+	}
+
+	for (int horizontal = 0; horizontal < 4; horizontal++)
+	{
+		for (int vertically = 0; vertically < 5; vertically++)
+		{
+			m_BlockPosition[40 + horizontal * 10 + vertically * 2] = D3DXVECTOR3(vertically * 3, 0.0f, horizontal * 3 + 2);
+			m_BlockPosition[40 + horizontal * 10 + vertically * 2 + 1] = D3DXVECTOR3(vertically * 3 + 1, 0.0f, horizontal * 3 + 2);
+		}
+	}
+
 	AddGameObject<Camera>(0)->ChangeCameraType(Follow);
 	AddGameObject<Sky>(1);
 	AddGameObject<Field>(1)->SetPosition(D3DXVECTOR3(6.5f,0.0f,6.5f));
 
-	// 前後左右に柵を配置
+	// 前後左右に柵を配置----------------------------------------------------------------
 	Simple3d* WallEast[14];
 	Simple3d* WallWest[14];
 	Simple3d* WallSouth[14];
@@ -66,27 +85,33 @@ void Game::Init()
 		}
 	}
 
+	m_RandomBlock[0] = AddGameObject<Simple3d>(1);
+	D3DXVECTOR3 pos = m_BlockPosition[Random(0, 79)];
+	m_RandomBlock[0]->SetPosition(pos);
+
 	// ブロックを配置(ランダム)----------------------------------------------------------------
-	for (int i = 0; i < RANDOM_BLOCK/2; i++)
+	for (int i = 0; i < RANDOM_BLOCK / 2; i++)
 	{
 		m_RandomBlock[i*2] = AddGameObject<Simple3d>(1);
 		m_RandomBlock[i*2+1] = AddGameObject<Simple3d>(1);
-		D3DXVECTOR3 pos = (D3DXVECTOR3((float)Random(0, 13), 0.0f, (float)Random(0, 13)));
+		m_ArchiveNumber[i] = Random(0, 79);
+		D3DXVECTOR3 pos = m_BlockPosition[m_ArchiveNumber[i]];
 
-		for (int q = 0; q < RANDOM_BLOCK/2; q++)
+		// ブロックの位置の重複を無くす
+		for (int q = 0; q < RANDOM_BLOCK / 2; q++)
 		{
-			if (m_RandomBlock[q]->GetPosition() == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
+			if (m_ArchiveNumber[q] = -1)
 			{
 				break;
 			}
 
-			while (pos == m_ArchiveRandomBlock[q])
+			while (m_ArchiveNumber[i] == m_ArchiveNumber[q])
 			{
-				pos = (D3DXVECTOR3((float)Random(0, 13), 0.0f, (float)Random(0, 13)));
+				m_ArchiveNumber[i] = Random(0, 79);
+				D3DXVECTOR3 pos = m_BlockPosition[m_ArchiveNumber[i]];
 			}
 		}
 		
-		m_ArchiveRandomBlock[i] = pos;
 		m_RandomBlock[i*2]->SetPosition(pos);
 		m_RandomBlock[i*2+1]->SetPosition(D3DXVECTOR3(pos.x,1.0f,pos.z));
 	}
@@ -140,25 +165,27 @@ void Game::Update()
 
 void Game::ChangeRandomBlock()
 {
-	for (int i = 0; i < RANDOM_BLOCK; i++)
+	for (int i = 0; i < RANDOM_BLOCK / 2; i++)
 	{
-		D3DXVECTOR3 pos = (D3DXVECTOR3((float)Random(0, 13), (float)Random(0, 1), (float)Random(0, 13)));
+		m_ArchiveNumber[i] = Random(0, 79);
+		D3DXVECTOR3 pos = m_BlockPosition[m_ArchiveNumber[i]];
 
-		for (int q = 0; q < RANDOM_BLOCK; q++)
+		for (int q = 0; q < RANDOM_BLOCK / 2; q++)
 		{
-			if (m_RandomBlock[q]->GetPosition() == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
+			if (m_ArchiveNumber[q] = -1)
 			{
 				break;
 			}
 
-			while (pos == m_ArchiveRandomBlock[q])
+			while (m_ArchiveNumber[i] == m_ArchiveNumber[q])
 			{
-				pos = (D3DXVECTOR3((float)Random(0, 13), (float)Random(0, 1), (float)Random(0, 13)));
+				m_ArchiveNumber[i] = Random(0, 79);
+				D3DXVECTOR3 pos = m_BlockPosition[m_ArchiveNumber[i]];
 			}
 		}
 
-		m_ArchiveRandomBlock[i] = pos;
-		m_RandomBlock[i]->SetPosition(pos);
+		m_RandomBlock[i * 2]->SetPosition(pos);
+		m_RandomBlock[i * 2 + 1]->SetPosition(D3DXVECTOR3(pos.x, 1.0f, pos.z));
 	}
 }
 
