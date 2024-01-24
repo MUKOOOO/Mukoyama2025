@@ -4,6 +4,7 @@
 class Title:public Scene
 {
 private:
+	class Camera* camera;
 	class Audio* m_BGM1;
 	class Audio* m_BGM2;
 

@@ -27,4 +27,5 @@ public:
 	D3DXMATRIX GetViewMatrix() { return m_ViewMatrix; }
 	void ChangeCameraType(CAMERA_TYPE type) { m_CameraType = type; }
 	bool CheckView(D3DXVECTOR3 Position, D3DXVECTOR3 Scale);
+	void SetTarget(D3DXVECTOR3 target) { m_Target = target; }
 };

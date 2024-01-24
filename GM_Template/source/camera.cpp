@@ -28,6 +28,35 @@ void Camera::Update()
 {	
 	Scene* scene = Manager::GetScene();
 
+	if (scene->GetSceneNumber() == 1)
+	{
+		switch (m_CameraType)
+		{
+		case Normal://Œ´“_
+
+			break;
+		case LookingDown://˜ëáÕ
+			if (m_SetUp == false)
+			{
+				m_SetUp = true;
+				m_Angle = LOOKINGDOWN;
+			}
+
+			m_Position = m_Target + m_Angle;
+
+			if (Input::GetKeyPress(VK_UP))
+			{
+				m_Angle.y += 0.1f;
+				m_Angle.z += 0.1f;
+			}
+			if (Input::GetKeyPress(VK_DOWN))
+			{
+				m_Angle.y -= 0.1f;
+				m_Angle.z -= 0.1f;
+			}
+			break;
+		}
+	}
 	if (scene->GetSceneNumber() == 2)
 	{
 		Player* player = scene->GetGameObject<Player>();
