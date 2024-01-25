@@ -128,7 +128,7 @@
     <ClInclude Include="source\sky.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="source\generateField.h">
+    <ClInclude Include="source\grassBlock.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="source\perlinNoise.h">
@@ -217,7 +217,7 @@
     <ClCompile Include="source\sky.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="source\generateField.cpp">
+    <ClCompile Include="source\grassBlock.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

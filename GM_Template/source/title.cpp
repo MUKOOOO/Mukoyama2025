@@ -7,7 +7,7 @@
 #include "input.h"
 #include "camera.h"
 #include "sky.h"
-#include "field.h"
+#include "grassBlock.h"
 #include "simple3d.h"
 
 std::random_device rd2;
@@ -23,27 +23,21 @@ void Title::Init()
 {
 	m_SceneNumber = 1;
 
+    // 3Dモデルの読み込み
+    GrassBlock().Load();
     Simple3d().Load();
 
+    // オブジェクトの配置
 	camera = AddGameObject<Camera>(0);
 	camera->SetPosition(D3DXVECTOR3(6.0f, 18.0f, -16.0f));
 	camera->SetTarget(D3DXVECTOR3(6.0f, 1.0f, 0.0f));
 
 	AddGameObject<Sky>(1);
-	//AddGameObject<Field>(1);
 
-	m_BGM1 = AddGameObject<GameObject>(0)->AddComponent<Audio>();
-	m_BGM1->Load("asset\\sound\\BGM1.wav");
-	m_BGM1->Play(0.05f, true);
-
-	m_BGM2 = AddGameObject<GameObject>(0)->AddComponent<Audio>();
-	m_BGM2->Load("asset\\sound\\BGM2.wav");
-	m_BGM2->Play(0.00f, true);
-
-    Simple3d* box[2500];
-    
-    //パーリンノイズ実験2
+    // パーリンノイズを使用した地形生成
+    GrassBlock* box[2500];
     PerlinNoise perlin;
+
     float _seedX = Random2(0, 100);
     float _seedz = Random2(0, 100);
 
@@ -51,7 +45,7 @@ void Title::Init()
     {
         for (int z = 0; z < 25; z++)
         {
-            box[x] = AddGameObject<Simple3d>(1);
+            box[x] = AddGameObject<GrassBlock>(1);
 
             float xSample = (x + _seedX) / 10.0f;
             float zSample = (z + _seedz) / 10.0f;
@@ -65,12 +59,22 @@ void Title::Init()
             box[x]->SetPosition(D3DXVECTOR3(x, y, z));
         }
     }
+
+	m_BGM1 = AddGameObject<GameObject>(0)->AddComponent<Audio>();
+	m_BGM1->Load("asset\\sound\\BGM1.wav");
+	m_BGM1->Play(0.05f, true);
+
+	m_BGM2 = AddGameObject<GameObject>(0)->AddComponent<Audio>();
+	m_BGM2->Load("asset\\sound\\BGM2.wav");
+	m_BGM2->Play(0.00f, true);   
+
 }
 
 void Title::Uninit()
 {
 	Scene::Uninit();
 
+    GrassBlock().Unload();
     Simple3d().Unload();
 }
 

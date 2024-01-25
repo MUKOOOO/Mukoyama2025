@@ -213,7 +213,7 @@
     <ClInclude Include="source\field.h" />
     <ClInclude Include="source\game.h" />
     <ClInclude Include="source\gameObject.h" />
-    <ClInclude Include="source\generateField.h" />
+    <ClInclude Include="source\grassBlock.h" />
     <ClInclude Include="source\goal.h" />
     <ClInclude Include="source\hitEffect.h" />
     <ClInclude Include="source\imgui\imconfig.h" />
@@ -245,7 +245,7 @@
     <ClCompile Include="source\camera.cpp" />
     <ClCompile Include="source\field.cpp" />
     <ClCompile Include="source\game.cpp" />
-    <ClCompile Include="source\generateField.cpp" />
+    <ClCompile Include="source\grassBlock.cpp" />
     <ClCompile Include="source\goal.cpp" />
     <ClCompile Include="source\hitEffect.cpp" />
     <ClCompile Include="source\imgui\imgui.cpp" />
