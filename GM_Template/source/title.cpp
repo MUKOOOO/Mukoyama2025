@@ -24,7 +24,7 @@ float Title::m_maxHeight{};
 
 void Title::Init()
 {
-	m_SceneNumber = 1;
+    e_sceneName = SCENE_NAME::TITLE;
 
     // 3Dƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
     GrassBlock().Load();

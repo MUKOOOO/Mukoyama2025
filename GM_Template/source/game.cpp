@@ -23,7 +23,7 @@ int Random(int low, int high)
 
 void Game::Init()
 {
-	m_SceneNumber = 2;
+	e_sceneName = SCENE_NAME::STAGE;
 
 	Simple3d().Load();
 	Goal().Load();

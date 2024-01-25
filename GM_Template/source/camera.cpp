@@ -28,8 +28,14 @@ void Camera::Update()
 {	
 	Scene* scene = Manager::GetScene();
 
-	if (scene->GetSceneNumber() == 1)
+	// ・タイトルでのカメラ仕様
+	// 　矢印キーでX/Z方向移動
+	// 　Y方向移動
+	// 　マウスドラッグで上下左右の視線移動
+
+	switch (scene->GetSceneName())
 	{
+	case SCENE_NAME::TITLE:
 		switch (m_CameraType)
 		{
 		case Normal://原点
@@ -43,22 +49,23 @@ void Camera::Update()
 			}
 
 			m_Position = m_Target + m_Angle;
-
-			if (Input::GetKeyPress(VK_UP))
-			{
-				m_Angle.y += 0.1f;
-				m_Angle.z += 0.1f;
-			}
-			if (Input::GetKeyPress(VK_DOWN))
-			{
-				m_Angle.y -= 0.1f;
-				m_Angle.z -= 0.1f;
-			}
 			break;
 		}
-	}
-	if (scene->GetSceneNumber() == 2)
-	{
+
+		if (Input::GetKeyPress(VK_UP))
+		{
+			m_Angle.y += 0.1f;
+			m_Angle.z += 0.1f;
+		}
+		if (Input::GetKeyPress(VK_DOWN))
+		{
+			m_Angle.y -= 0.1f;
+			m_Angle.z -= 0.1f;
+		}
+
+		m_Position = m_Target + m_Angle;
+		break;
+	case SCENE_NAME::STAGE:
 		Player* player = scene->GetGameObject<Player>();
 
 		switch (m_CameraType)
@@ -108,6 +115,7 @@ void Camera::Update()
 			}
 			break;
 		}
+		break;
 	}
 }
 

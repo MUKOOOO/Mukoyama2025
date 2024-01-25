@@ -20,7 +20,6 @@ float ImguiManager::m_MaxHeight = 1.0f;
 
 void ImguiManager::Init()
 {
-
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
@@ -30,7 +29,6 @@ void ImguiManager::Init()
 
     ImGui_ImplWin32_Init(GetWindow());
 	ImGui_ImplDX11_Init(Renderer::GetDevice(), Renderer::GetDeviceContext());
-
 }
 
 void ImguiManager::Uninit()
@@ -43,27 +41,27 @@ void ImguiManager::Uninit()
 void ImguiManager::Begin()
 {
     Scene* scene = Manager::GetScene();
+    Title* title = scene->GetGameObject<Title>();
 
-    if (scene->GetSceneNumber() == 1)
+    switch (scene->GetSceneName())
     {
+    case SCENE_NAME::TITLE:
         ImGui_ImplDX11_NewFrame();
         ImGui::NewFrame();
         ImGui::Begin("Test");
 
-        Title* title = scene->GetGameObject<Title>();
+        
 
         m_Bump = title->GetBump();
-        ImGui::DragFloat("Bump", &m_Bump, 0.1f,0.0f,100.0f,"%3.1f");
+        ImGui::DragFloat("Bump", &m_Bump, 1.0f, 0.0f, 100.0f, "%3.1f");
         title->SetBump(m_Bump);
 
         m_MaxHeight = title->GetMaxHeight();
-        ImGui::DragFloat("MaxHeight", &m_MaxHeight, 0.1f, 0.0f, 100.0f, "%3.1f");
+        ImGui::DragFloat("MaxHeight", &m_MaxHeight, 1.0f, 0.0f, 100.0f, "%3.1f");
         title->SetMaxHeight(m_MaxHeight);
-    }
-    
+        break;
 
-    if (scene->GetSceneNumber() == 2)
-    {
+    case SCENE_NAME::STAGE:
         Player* player = scene->GetGameObject<Player>();
 
         static float f;
@@ -106,6 +104,7 @@ void ImguiManager::Begin()
         {
             player->SetEnable(true);
         }
+        break;
     }
 }
 

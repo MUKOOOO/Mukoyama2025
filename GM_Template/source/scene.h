@@ -4,12 +4,19 @@
 #include<vector>
 #include<typeinfo>
 
+enum struct SCENE_NAME
+{
+	NONE,
+	TITLE,
+	STAGE
+};
+
 class Scene
 {
 protected:
 	//GameObject* m_GameObject[4]{};
 	std::list<GameObject*> m_GameObject[3];
-	int m_SceneNumber;
+	SCENE_NAME e_sceneName = SCENE_NAME::NONE;
 	int a;
 public:
 	virtual void Init()
@@ -99,7 +106,9 @@ public:
 		return objects;
 	}
 
+	// シーンを跨いだスコアの保存
 	void SetA(int s) { a = s; }
 	int GetA(void) { return a; }
-	int GetSceneNumber() { return m_SceneNumber; }
+
+	SCENE_NAME GetSceneName() { return e_sceneName; }
 };
