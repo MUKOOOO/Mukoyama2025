@@ -97,11 +97,11 @@ void Title::Init()
     Simple3d().Load();
 
 	camera = AddGameObject<Camera>(0);
-	camera->SetPosition(D3DXVECTOR3(0.0f, 1.0f, -8.0f));
-	camera->SetTarget(D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+	camera->SetPosition(D3DXVECTOR3(6.0f, 18.0f, -16.0f));
+	camera->SetTarget(D3DXVECTOR3(6.0f, 1.0f, 0.0f));
 
 	AddGameObject<Sky>(1);
-	AddGameObject<Field>(1);
+	//AddGameObject<Field>(1);
 
 	m_BGM1 = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_BGM1->Load("asset\\sound\\BGM1.wav");
@@ -111,24 +111,31 @@ void Title::Init()
 	m_BGM2->Load("asset\\sound\\BGM2.wav");
 	m_BGM2->Play(0.00f, true);
 
-    Simple3d* box[100];
+    Simple3d* box[2500];
     
     //パーリンノイズ実験2
     PerlinNoise perlin;
+    float _seedX = Random2(0, 100);
+    float _seedz = Random2(0, 100);
 
-    for (int x = 0; x < 10; x++)
+    for (int x = 0; x < 25; x++)
     {
-        float xSample = Random2(0, 100) / 15.0f;
-        float zSample = Random2(0, 100) / 15.0f;;
+        for (int z = 0; z < 25; z++)
+        {
+            box[x] = AddGameObject<Simple3d>(1);
 
-        float noise = perlin.noise(xSample, zSample);
+            float xSample = (x + _seedX) / 15.0f;
+            float zSample = (z + _seedz) / 15.0f;
 
-        float y = 10.0f * noise;
+            float noise = perlin.noise(xSample, zSample);
 
-        box[x] = AddGameObject<Simple3d>(1);
-        box[x]->SetPosition(D3DXVECTOR3(x, y, x));
+            float y = 0.0f;
+            y = 4.0f * noise;
+            y = (int)y;
+
+            box[x]->SetPosition(D3DXVECTOR3(x, y, z));
+        }
     }
-    
 }
 
 void Title::Uninit()
