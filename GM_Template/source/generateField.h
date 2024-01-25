@@ -3,7 +3,7 @@
 #include "model.h"
 #include "gameObject.h"
 
-class Simple3d : public GameObject
+class GenerateField : public GameObject
 {
 private:
 	static Model* m_Model;
