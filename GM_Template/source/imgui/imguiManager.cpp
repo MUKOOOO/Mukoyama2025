@@ -7,12 +7,16 @@
 #include "../manager.h"
 #include "../scene.h"
 #include "../player.h"
+#include "../title.h"
 
 char ImguiManager::m_Buffer[1024];
 bool ImguiManager::flg;
+bool ImguiManager::randomSeed = true;
 float ImguiManager::vec4a[3] = {0.10f, 0.20f, 0.30f};
 float ImguiManager::m_Rotation[3] = {0.0f, 0.0f, 0.0f};
 float ImguiManager::m_Scale[3] = {1.0f, 1.0f, 1.0f};
+float ImguiManager::m_Bump = 1.0f;
+float ImguiManager::m_MaxHeight = 1.0f;
 
 void ImguiManager::Init()
 {
@@ -45,6 +49,16 @@ void ImguiManager::Begin()
         ImGui_ImplDX11_NewFrame();
         ImGui::NewFrame();
         ImGui::Begin("Test");
+
+        Title* title = scene->GetGameObject<Title>();
+
+        m_Bump = title->GetBump();
+        ImGui::DragFloat("Bump", &m_Bump, 0.1f,0.0f,100.0f,"%3.1f");
+        title->SetBump(m_Bump);
+
+        m_MaxHeight = title->GetMaxHeight();
+        ImGui::DragFloat("MaxHeight", &m_MaxHeight, 0.1f, 0.0f, 100.0f, "%3.1f");
+        title->SetMaxHeight(m_MaxHeight);
     }
     
 

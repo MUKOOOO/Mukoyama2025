@@ -19,6 +19,9 @@ int Random2(int low, int high)
     return dist(gen2);
 }
 
+float Title::m_bump{};
+float Title::m_maxHeight{};
+
 void Title::Init()
 {
 	m_SceneNumber = 1;
@@ -29,37 +32,37 @@ void Title::Init()
 
     // オブジェクトの配置
 	camera = AddGameObject<Camera>(0);
-	camera->SetPosition(D3DXVECTOR3(6.0f, 18.0f, -16.0f));
-	camera->SetTarget(D3DXVECTOR3(6.0f, 1.0f, 0.0f));
+	camera->SetPosition(D3DXVECTOR3(12.0f, 6.0f, -6.0f));
+	camera->SetTarget(D3DXVECTOR3(12.0f, 5.0f, 0.0f));
 
 	AddGameObject<Sky>(1);
 
     // パーリンノイズを使用した地形生成
-    GrassBlock* box[2500];
+    m_bump = 10.0f;
+    m_maxHeight = 4.5;
+    m_seedX = Random2(0, 100);
+    m_seedZ = Random2(0, 100);
+    m_randomSeed = true;
     PerlinNoise perlin;
 
-    float _seedX = Random2(0, 100);
-    float _seedz = Random2(0, 100);
-
-    for (int x = 0; x < 25; x++)
+    for (int z = 0; z < fieldSizeZ; z++)
     {
-        for (int z = 0; z < 25; z++)
+        for (int x = 0; x < fieldSizeX; x++)
         {
-            box[x] = AddGameObject<GrassBlock>(1);
+            grassBlock[z * fieldSizeX + x] = AddGameObject<GrassBlock>(1);
 
-            float xSample = (x + _seedX) / 10.0f;
-            float zSample = (z + _seedz) / 10.0f;
-
+            float xSample = (x + m_seedX) / m_bump;
+            float zSample = (z + m_seedZ) / m_bump;
             float noise = perlin.noise(xSample, zSample);
 
             float y = 0.0f;
-            y = 4.0f * noise;
-            y = (int)y;
+            y = m_maxHeight * noise;
 
-            box[x]->SetPosition(D3DXVECTOR3(x, y, z));
+            grassBlock[z * fieldSizeX + x]->SetPosition(D3DXVECTOR3(x, (int)y, z));
         }
     }
 
+    // インタラクティブミュージック(縦の遷移)
 	m_BGM1 = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_BGM1->Load("asset\\sound\\BGM1.wav");
 	m_BGM1->Play(0.05f, true);
@@ -81,6 +84,22 @@ void Title::Uninit()
 void Title::Update()
 {
 	Scene::Update();
+
+    PerlinNoise perlin;
+    for (int z = 0; z < fieldSizeZ; z++)
+    {
+        for (int x = 0; x < fieldSizeX; x++)
+        {
+            float xSample = (x + m_seedX) / m_bump;
+            float zSample = (z + m_seedZ) / m_bump;
+            float noise = perlin.noise(xSample, zSample);
+
+            float y = 0.0f;
+            y = m_maxHeight * noise;
+
+            grassBlock[z * fieldSizeX + x]->SetPosition(D3DXVECTOR3(x, (int)y, z));
+        }
+    }
 
 	if (Input::GetKeyTrigger('A'))
 	{
