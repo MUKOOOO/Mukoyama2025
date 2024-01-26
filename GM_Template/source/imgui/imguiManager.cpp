@@ -41,77 +41,87 @@ void ImguiManager::Uninit()
 void ImguiManager::Begin()
 {
     Scene* scene = Manager::GetScene();
-    Title* title = scene->GetGameObject<Title>();
 
     switch (scene->GetSceneName())
     {
     case SCENE_NAME::TITLE:
-        ImGui_ImplDX11_NewFrame();
-        ImGui::NewFrame();
-        ImGui::Begin("Test");
-
-        
-
-        m_Bump = title->GetBump();
-        ImGui::DragFloat("Bump", &m_Bump, 1.0f, 0.0f, 100.0f, "%3.1f");
-        title->SetBump(m_Bump);
-
-        m_MaxHeight = title->GetMaxHeight();
-        ImGui::DragFloat("MaxHeight", &m_MaxHeight, 1.0f, 0.0f, 100.0f, "%3.1f");
-        title->SetMaxHeight(m_MaxHeight);
+        TitleScene();
         break;
-
     case SCENE_NAME::STAGE:
-        Player* player = scene->GetGameObject<Player>();
-
-        static float f;
-
-        ImGui_ImplDX11_NewFrame();
-        ImGui::NewFrame();
-        ImGui::Begin("Test");
-
-        vec4a[0] = player->GetPosition().x;
-        vec4a[1] = player->GetPosition().y;
-        vec4a[2] = player->GetPosition().z;
-
-        if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            ImGui::Text("Position");
-            ImGui::SameLine();
-            ImGui::DragFloat3("##Position", vec4a, 1.0, 0.0, 0.0, "%3.1f");
-
-            player->SetPosition(vec4a);
-
-            ImGui::Text("Rotation");
-            ImGui::SameLine();
-            ImGui::DragFloat3("##Rotation", m_Rotation, 1.0, 0.0, 0.0, "%3.1f");
-
-            ImGui::Text("Scale   ");
-            ImGui::SameLine();
-            ImGui::DragFloat3("##Scale", m_Scale, 1.0, 0.0, 0.0, "%3.1f");
-        };
-
-        ImGui::Checkbox("Hidden", &flg);
-
-        if (flg)
-        {
-            ImGui::Text("TestText");
-            player->SetEnable(false);
-            ImGui::Begin("new");
-            ImGui::End();
-        }
-        else
-        {
-            player->SetEnable(true);
-        }
+        StageScene();
         break;
     }
 }
-
 
 void ImguiManager::End()
 {
     ImGui::End();
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+}
+
+
+void ImguiManager::TitleScene()
+{
+    Scene* scene = Manager::GetScene();
+    Title* title = scene->GetGameObject<Title>();
+
+    ImGui_ImplDX11_NewFrame();
+    ImGui::NewFrame();
+    ImGui::Begin("Test");
+
+    m_Bump = title->GetBump();
+    ImGui::DragFloat("Bump", &m_Bump, 1.0f, 0.0f, 100.0f, "%3.1f");
+    title->SetBump(m_Bump);
+
+    m_MaxHeight = title->GetMaxHeight();
+    ImGui::DragFloat("MaxHeight", &m_MaxHeight, 1.0f, 0.0f, 100.0f, "%3.1f");
+    title->SetMaxHeight(m_MaxHeight);
+}
+
+void ImguiManager::StageScene()
+{
+    Scene* scene = Manager::GetScene();
+    Player* player = scene->GetGameObject<Player>();
+
+    //static float f;
+
+    ImGui_ImplDX11_NewFrame();
+    ImGui::NewFrame();
+    ImGui::Begin("Test");
+
+    vec4a[0] = player->GetPosition().x;
+    vec4a[1] = player->GetPosition().y;
+    vec4a[2] = player->GetPosition().z;
+
+    if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        ImGui::Text("Position");
+        ImGui::SameLine();
+        ImGui::DragFloat3("##Position", vec4a, 1.0, 0.0, 0.0, "%3.1f");
+
+        player->SetPosition(vec4a);
+
+        ImGui::Text("Rotation");
+        ImGui::SameLine();
+        ImGui::DragFloat3("##Rotation", m_Rotation, 1.0, 0.0, 0.0, "%3.1f");
+
+        ImGui::Text("Scale   ");
+        ImGui::SameLine();
+        ImGui::DragFloat3("##Scale", m_Scale, 1.0, 0.0, 0.0, "%3.1f");
+    };
+
+    ImGui::Checkbox("Hidden", &flg);
+
+    if (flg)
+    {
+        ImGui::Text("TestText");
+        player->SetEnable(false);
+        ImGui::Begin("new");
+        ImGui::End();
+    }
+    else
+    {
+        player->SetEnable(true);
+    }
 }

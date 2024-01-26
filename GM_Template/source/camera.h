@@ -24,6 +24,9 @@ public:
 	void Update();
 	void Draw();
 
+	void TitleScene();
+	void StageScene();
+
 	D3DXMATRIX GetViewMatrix() { return m_ViewMatrix; }
 	void ChangeCameraType(CAMERA_TYPE type) { m_CameraType = type; }
 	bool CheckView(D3DXVECTOR3 Position, D3DXVECTOR3 Scale);

@@ -19,4 +19,7 @@ public:
 	static void Uninit();
 	static void Begin();
 	static void End();
+
+	static void TitleScene();
+	static void StageScene();
 };
