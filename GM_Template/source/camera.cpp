@@ -69,6 +69,7 @@ void Camera::TitleScene()
 	if (Input::GetKeyPress('A'))
 	{
 		m_Target.x -= DEBAG_CAMERA_SPEED;
+		m_Position.x -= DEBAG_CAMERA_SPEED;
 	}
 	if (Input::GetKeyPress('S'))
 	{
@@ -77,20 +78,38 @@ void Camera::TitleScene()
 	if (Input::GetKeyPress('D'))
 	{
 		m_Target.x += DEBAG_CAMERA_SPEED;
+		m_Position.x += DEBAG_CAMERA_SPEED;
 	}
 
 	if (Input::GetKeyPress(VK_UP))
 	{
 		m_Target.y += DEBAG_CAMERA_SPEED;
+		m_Position.y += DEBAG_CAMERA_SPEED;
 	}
 	if (Input::GetKeyPress(VK_DOWN))
 	{
 		m_Target.y -= DEBAG_CAMERA_SPEED;
+		m_Position.y -= DEBAG_CAMERA_SPEED;
 	}
 
-	// マウスをドラッグして角度を変えることが出来るようにする処理(未実装)
+	// マウスをドラッグして角度を変更する
+	POINT point;
+	GetCursorPos(&point);
+	ScreenToClient(GetActiveWindow(), &point);
 
-	m_Position = m_Target + D3DXVECTOR3(0.0f,0.0f,-0.1f);
+	if (Input::GetKeyPress(VK_LBUTTON))
+	{
+		int moveX = point.x - m_OldMouseX;
+		int moveY = point.y - m_OldMouseY;
+
+		m_Target.y -= moveY*0.001f;
+		m_Target.x += moveX*0.001f;
+	}
+
+	m_Position.z = m_Target.z -0.1f;
+
+	m_OldMouseX = point.x;
+	m_OldMouseY = point.y;
 #endif // !Debag
 
 }

@@ -210,6 +210,7 @@
     <ClInclude Include="source\audio.h" />
     <ClInclude Include="source\camera.h" />
     <ClInclude Include="source\component.h" />
+    <ClInclude Include="source\fade.h" />
     <ClInclude Include="source\field.h" />
     <ClInclude Include="source\game.h" />
     <ClInclude Include="source\gameObject.h" />
@@ -243,6 +244,7 @@
   <ItemGroup>
     <ClCompile Include="source\audio.cpp" />
     <ClCompile Include="source\camera.cpp" />
+    <ClCompile Include="source\fade.cpp" />
     <ClCompile Include="source\field.cpp" />
     <ClCompile Include="source\game.cpp" />
     <ClCompile Include="source\grassBlock.cpp" />

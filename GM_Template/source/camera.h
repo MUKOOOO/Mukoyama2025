@@ -18,6 +18,8 @@ private:
 
 	CAMERA_TYPE m_CameraType;
 
+	int m_OldMouseX;
+	int m_OldMouseY;
 	bool m_SetUp;
 public:
 	void Init();
