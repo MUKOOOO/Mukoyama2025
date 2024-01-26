@@ -3,6 +3,10 @@
 
 //フェードアウト→徐々に画面が見えなくなる
 //フェードイン→徐々に画面が見えるようになる
+
+/// <summary>
+/// フェードイン/フェードアウトを管理するクラス
+/// </summary>
 class Fade : public GameObject
 {
 private:
