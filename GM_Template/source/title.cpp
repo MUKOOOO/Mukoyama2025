@@ -9,6 +9,7 @@
 #include "sky.h"
 #include "grassBlock.h"
 #include "simple3d.h"
+#include "fade.h"
 
 std::random_device rd2;
 std::mt19937 gen2(rd2());
@@ -61,6 +62,9 @@ void Title::Init()
             grassBlock[z * fieldSizeX + x]->SetPosition(D3DXVECTOR3(x, (int)y, z));
         }
     }
+
+    Fade* fade = AddGameObject<Fade>(2);
+    fade->FadeIn();
 
     // インタラクティブミュージック(縦の遷移)
 	m_BGM1 = AddGameObject<GameObject>(0)->AddComponent<Audio>();
