@@ -3,7 +3,7 @@
 #include "fade.h"
 #include"sprite.h"
 
-#define SPEED 0.04f
+#define SPEED 0.02f
 
 void Fade::Init()
 {
