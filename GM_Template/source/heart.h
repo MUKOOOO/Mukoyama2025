@@ -3,7 +3,7 @@
 #include "model.h"
 #include "gameObject.h"
 
-class GrassBlock : public GameObject
+class Heart : public GameObject
 {
 private:
 	static Model* m_Model;

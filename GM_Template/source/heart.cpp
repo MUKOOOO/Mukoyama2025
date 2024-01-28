@@ -2,37 +2,38 @@
 #include "manager.h"
 #include "scene.h"
 #include "renderer.h"
-#include "grassBlock.h"
+#include "heart.h"
 #include "camera.h"
 
-Model* GrassBlock::m_Model{};
+Model* Heart::m_Model{};
 
-void GrassBlock::Load()
+void Heart::Load()
 {
 	m_Model = new Model();
-	m_Model->Load("asset\\gift\\block05.obj");
+	m_Model->Load("asset\\model\\torus.obj");
+	//m_Model->Load("asset\\gift\\item2.obj");
 }
 
-void GrassBlock::Unload()
+void Heart::Unload()
 {
 	m_Model->Unload();
 	delete m_Model;
 }
 
-void GrassBlock::Init()
+void Heart::Init()
 {
-	m_Position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_Position = D3DXVECTOR3(12.0f, 8.0f, 0.0f);
 	m_Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout,
-		"shader\\vertexLightingVS.cso");
+		"shader\\pixelLightingVS.cso");
 
 	Renderer::CreatePixelShader(&m_PixelShader,
-		"shader\\vertexLightingPS.cso");
+		"shader\\pixelLightingPS.cso");
 }
 
-void GrassBlock::Uninit()
+void Heart::Uninit()
 {
 	GameObject::Uninit();
 
@@ -41,12 +42,12 @@ void GrassBlock::Uninit()
 	m_PixelShader->Release();
 }
 
-void GrassBlock::Update()
+void Heart::Update()
 {
 	GameObject::Update();
 }
 
-void GrassBlock::Draw()
+void Heart::Draw()
 {
 	Scene* scene = Manager::GetScene();
 	Camera* camera = scene->GetGameObject<Camera>();

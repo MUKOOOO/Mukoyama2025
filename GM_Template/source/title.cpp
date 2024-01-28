@@ -9,6 +9,7 @@
 #include "sky.h"
 #include "grassBlock.h"
 #include "simple3d.h"
+#include "heart.h"
 #include "fade.h"
 
 std::random_device rd2;
@@ -30,6 +31,7 @@ void Title::Init()
     // 3Dモデルの読み込み
     GrassBlock().Load();
     Simple3d().Load();
+    Heart().Load();
 
     // オブジェクトの配置
 	camera = AddGameObject<Camera>(0);
@@ -37,6 +39,8 @@ void Title::Init()
 	camera->SetTarget(D3DXVECTOR3(12.0f, 8.0f, 0.0f));
 
 	AddGameObject<Sky>(1);
+
+    AddGameObject<Heart>(1);
 
     // パーリンノイズを使用した地形生成
     m_bump = 10.0f;
@@ -81,6 +85,7 @@ void Title::Uninit()
 {
 	Scene::Uninit();
 
+    Heart().Unload();
     GrassBlock().Unload();
     Simple3d().Unload();
 }
