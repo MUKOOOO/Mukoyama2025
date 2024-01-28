@@ -260,6 +260,7 @@
     <ClInclude Include="source\simple3d.h" />
     <ClInclude Include="source\sky.h" />
     <ClInclude Include="source\sprite.h" />
+    <ClInclude Include="source\test.h" />
     <ClInclude Include="source\title.h" />
   </ItemGroup>
   <ItemGroup>
@@ -297,6 +298,7 @@
     <ClCompile Include="source\simple3d.cpp" />
     <ClCompile Include="source\sky.cpp" />
     <ClCompile Include="source\sprite.cpp" />
+    <ClCompile Include="source\test.cpp" />
     <ClCompile Include="source\title.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

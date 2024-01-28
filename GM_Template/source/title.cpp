@@ -12,6 +12,8 @@
 #include "heart.h"
 #include "fade.h"
 
+#include "test.h"
+
 std::random_device rd2;
 std::mt19937 gen2(rd2());
 
@@ -40,7 +42,7 @@ void Title::Init()
 
 	AddGameObject<Sky>(1);
 
-    AddGameObject<Heart>(1);
+    AddGameObject<Test>(1);
 
     // パーリンノイズを使用した地形生成
     m_bump = 10.0f;
