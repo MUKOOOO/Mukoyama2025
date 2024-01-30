@@ -33,7 +33,7 @@ void Title::Init()
 
     // オブジェクトの配置
 	camera = AddGameObject<Camera>(0);
-	camera->SetPosition(D3DXVECTOR3(12.0f, 6.0f, -6.0f));
+	camera->SetPosition(D3DXVECTOR3(12.0f, 5.05f, -6.0f));
 	camera->SetTarget(D3DXVECTOR3(12.0f, 5.0f, 0.0f));
 
 	AddGameObject<Sky>(1);
@@ -43,6 +43,7 @@ void Title::Init()
     m_maxHeight = 4.5;
     m_seedX = Random2(0, 100);
     m_seedZ = Random2(0, 100);
+    m_SceneChange = false;
     m_randomSeed = true;
     PerlinNoise perlin;
 
@@ -89,6 +90,17 @@ void Title::Update()
 {
 	Scene::Update();
 
+    if (m_SceneChange == true)return;
+
+    // シーンを切り替える処理
+    if (Input::GetKeyPress(VK_SPACE))
+    {
+        m_SceneChange = true;
+        //BGMフェードイン、SE再生、画面フェードイン
+        SceneChange();
+    }
+
+    // 地形を変更する処理
     PerlinNoise perlin;
     for (int z = 0; z < fieldSizeZ; z++)
     {
@@ -105,6 +117,7 @@ void Title::Update()
         }
     }
 
+    // BGMをインタラクティブに切り替える
 	if (Input::GetKeyTrigger('A'))
 	{
 		m_BGM1->VolumeSet(0.0f);
@@ -116,4 +129,15 @@ void Title::Update()
 		m_BGM1->VolumeSet(0.05f);
 		m_BGM2->VolumeSet(0.0f);
 	}
+}
+
+void Title::SceneChange()
+{
+    int i = 0;
+
+    while (i<100)
+    {
+        i++;
+        
+    }
 }

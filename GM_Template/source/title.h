@@ -17,12 +17,15 @@ private:
 	float m_seedX;
 	float m_seedZ;
 
+	bool m_SceneChange;
 	bool m_randomSeed;
 
 public:
 	void Init();
 	void Uninit();
 	void Update();
+
+	void SceneChange();
 
 	void SetBump(float bump) { m_bump = bump; }
 	float GetBump() { return m_bump; }

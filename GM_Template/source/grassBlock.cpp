@@ -26,10 +26,10 @@ void GrassBlock::Init()
 	m_Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout,
-		"shader\\vertexLightingVS.cso");
+		"shader\\unlitTextureVS.cso");
 
 	Renderer::CreatePixelShader(&m_PixelShader,
-		"shader\\vertexLightingPS.cso");
+		"shader\\unlitTexturePS.cso");
 }
 
 void GrassBlock::Uninit()
