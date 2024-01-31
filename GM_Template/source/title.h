@@ -1,8 +1,8 @@
 #pragma once
 #include "scene.h"
 
-#define fieldSizeX 25
-#define fieldSizeZ 25
+#define fieldSizeX 50
+#define fieldSizeZ 50
 
 class Title:public Scene
 {

@@ -10,6 +10,7 @@
 #include "grassBlock.h"
 #include "simple3d.h"
 #include "fade.h"
+#include "game.h"
 
 std::random_device rd2;
 std::mt19937 gen2(rd2());
@@ -96,6 +97,8 @@ void Title::Update()
     if (Input::GetKeyPress(VK_SPACE))
     {
         m_SceneChange = true;
+        Manager::SetScene<Game>();
+
         //BGMフェードイン、SE再生、画面フェードイン
         SceneChange();
     }
@@ -133,11 +136,5 @@ void Title::Update()
 
 void Title::SceneChange()
 {
-    int i = 0;
-
-    while (i<100)
-    {
-        i++;
-        
-    }
+    
 }

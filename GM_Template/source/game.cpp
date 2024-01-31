@@ -1,6 +1,7 @@
 #include "main.h"
 #include "manager.h"
 #include "renderer.h"
+#include "audio.h"
 #include "game.h"
 #include "input.h"
 #include "camera.h"
@@ -28,7 +29,7 @@ void Game::Init()
 	Simple3d().Load();
 	Goal().Load();
 
-	//ブロックが配置される可能性のある位置を登録
+	//ブロックが配置される可能性のある位置を設定
 	for (int horizontal = 0; horizontal < 4; horizontal++)
 	{
 		for (int vertically = 0; vertically < 5; vertically++)
@@ -116,14 +117,20 @@ void Game::Init()
 		m_RandomBlock[i*2+1]->SetPosition(D3DXVECTOR3(pos.x,1.0f,pos.z));
 	}
 
-	AddGameObject<Goal>(1)->SetPosition(D3DXVECTOR3(0.0f,0.0f,13.0f));
+	AddGameObject<Goal>(1);
+
 	player = AddGameObject<Player>(1);
+	player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.0f));
 
 	score = AddGameObject<Score>(2);
 
 	m_BreakMap = 1;
 	m_Frame = 0;
 	score->SetScore(1);
+
+	m_BGM = AddGameObject<GameObject>(0)->AddComponent<Audio>();
+	m_BGM->Load("asset\\sound\\Suno.wav");
+	m_BGM->Play(0.05f, true);
 }
 
 void Game::Uninit()
@@ -138,10 +145,12 @@ void Game::Update()
 {
 	Scene::Update();
 
+	// ゴールブロックと衝突した場合の処理
 	if (player->GetPlayerCollision() == GOAL)
 	{
 		player->SetPlayerCollision(NONE);
 
+		// 突破したマップの数が指定の数と異なる場合ダンジョンを再生成
 		if (m_BreakMap == 3)
 		{
 			GameClear();

@@ -15,6 +15,7 @@ private:
 	class Simple3d* m_DefaultBlock[DEFAULT_BLOCK]{};
 	class Simple3d* m_RandomBlock[RANDOM_BLOCK]{};
 
+	class Audio* m_BGM{};
 	class Player* player{};
 	class Score* score{};
 

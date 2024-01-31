@@ -23,7 +23,7 @@ void Player::Init()
 
 	m_Position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_Scale = D3DXVECTOR3(0.5f, 0.9f, 0.5f);
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout,
 		"shader\\vertexLightingVS.cso");
@@ -31,7 +31,7 @@ void Player::Init()
 	Renderer::CreatePixelShader(&m_PixelShader,
 		"shader\\vertexLightingPS.cso");
 
-	m_Speed = 0.1f;
+	m_Speed = 0.01f;
 	m_GroundHeight = 0.0f;
 	m_GroundHeightTemp = 0.0f;
 	m_IsEnable = true;
@@ -71,16 +71,16 @@ void Player::Update()
 	{
 		if (Input::GetKeyPress('W') || Input::GetKeyPress('S'))
 		{
-			m_Speed = 0.07f;
+			m_Speed = 0.035f;
 		}
 		else
 		{
-			m_Speed = 0.1f;
+			m_Speed = 0.05f;
 		}
 	}
 	else if (Input::GetKeyPress('W') || Input::GetKeyPress('S'))
 	{
-		m_Speed = 0.1f;
+		m_Speed = 0.05f;
 	}
 
 	if (Input::GetKeyPress('W'))
