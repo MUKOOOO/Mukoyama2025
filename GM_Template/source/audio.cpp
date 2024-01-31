@@ -20,6 +20,7 @@ void Audio::InitMaster()
 
 	// マスタリングボイス生成
 	m_Xaudio->CreateMasteringVoice(&m_MasteringVoice);
+	
 }
 
 
@@ -151,9 +152,15 @@ void Audio::Play(float Volume,bool Loop)
 
 }
 
-void Audio::VolumeSet(float Volume)
+void Audio::SetVolume(float Volume)
 {
 	m_SourceVoice->SetVolume(Volume);
 }
 
+float Audio::GetVolume() const
+{
+	float volume;
+	m_SourceVoice->GetVolume(&volume);
 
+	return volume;
+}

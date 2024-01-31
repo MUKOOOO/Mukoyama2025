@@ -123,14 +123,14 @@ void Title::Update()
     // BGMをインタラクティブに切り替える
 	if (Input::GetKeyTrigger('A'))
 	{
-		m_BGM1->VolumeSet(0.0f);
-		m_BGM2->VolumeSet(0.05f);
+		m_BGM1->SetVolume(0.0f);
+		m_BGM2->SetVolume(0.05f);
 	}
 
 	if (Input::GetKeyTrigger('D'))
 	{
-		m_BGM1->VolumeSet(0.05f);
-		m_BGM2->VolumeSet(0.0f);
+		m_BGM1->SetVolume(0.05f);
+		m_BGM2->SetVolume(0.0f);
 	}
 }
 
