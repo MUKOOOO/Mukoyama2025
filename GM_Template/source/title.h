@@ -32,4 +32,6 @@ public:
 
 	void SetMaxHeight(float maxHeight) { m_maxHeight = maxHeight; }
 	float GetMaxHeight() { return m_maxHeight; }
+
+	void ChangeBGM(Audio* audio1);
 };

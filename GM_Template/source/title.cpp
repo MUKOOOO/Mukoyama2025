@@ -123,8 +123,10 @@ void Title::Update()
     // BGMをインタラクティブに切り替える
 	if (Input::GetKeyTrigger('A'))
 	{
-		m_BGM1->SetVolume(0.0f);
-		m_BGM2->SetVolume(0.05f);
+        ChangeBGM(m_BGM1);
+
+		//m_BGM1->SetVolume(0.0f);
+		//m_BGM2->SetVolume(0.05f);
 	}
 
 	if (Input::GetKeyTrigger('D'))
@@ -137,4 +139,15 @@ void Title::Update()
 void Title::SceneChange()
 {
     
+}
+
+void Title::ChangeBGM(Audio* audio1)
+{
+    float i = 0.05f;
+
+    while (audio1->GetVolume() > 0.0f)
+    {
+        audio1->SetVolume(i);
+        i -= 0.00000001f;
+    }
 }
