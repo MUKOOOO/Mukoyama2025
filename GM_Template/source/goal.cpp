@@ -22,9 +22,9 @@ void Goal::Unload()
 
 void Goal::Init()
 {
-	m_Position = D3DXVECTOR3(0.5f, 0.5f, 12.5f);
+	m_Position = D3DXVECTOR3(0.5f, 0.1f, 12.5f);
 	m_Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_Scale = D3DXVECTOR3(0.5f, 0.5f, 0.5f);
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout,
 		"shader\\vertexLightingVS.cso");

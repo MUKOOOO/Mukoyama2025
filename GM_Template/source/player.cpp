@@ -13,6 +13,7 @@
 #define XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE  7849
 #define XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE 8689
 #define GRAVITY 0.01f
+#define SIZE 0.8f
 
 void Player::Init()
 {
@@ -259,16 +260,16 @@ void Player::CollisionUpdate()
 		D3DXVECTOR3 scale = box->GetScale();
 		D3DXVECTOR3 right = box->GetRight();            //x軸分離
 		D3DXVECTOR3 forward = box->GetForward();        //z軸分離
-		D3DXVECTOR3 up = box->GetUp();                    //y軸分離
-		D3DXVECTOR3 direction = m_Position - position;    //直方体からプレイヤーまでの方向ベクトル
-		float obbx = D3DXVec3Dot(&direction, &right);    //X軸分離方向プレイヤー距離
-		float obbz = D3DXVec3Dot(&direction, &forward);    //Z軸分離方向プレイヤー距離
-		float obby = D3DXVec3Dot(&direction, &up);        //Y軸分離方向プレイヤー距離
+		D3DXVECTOR3 up = box->GetUp();                  //y軸分離
+		D3DXVECTOR3 direction = m_Position - position;  //直方体からプレイヤーまでの方向ベクトル
+		float obbx = D3DXVec3Dot(&direction, &right);   //X軸分離方向プレイヤー距離
+		float obbz = D3DXVec3Dot(&direction, &forward); //Z軸分離方向プレイヤー距離
+		float obby = D3DXVec3Dot(&direction, &up);      //Y軸分離方向プレイヤー距離
 
 		//OBB
-		if (fabs(obbx) < scale.x && fabs(obbz) < scale.z && fabs(obby) < scale.y)
+		if (fabs(obbx) < SIZE && fabs(obbz) < SIZE && fabs(obby) < SIZE)
 		{
-			D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - abs(obbx), scale.y - abs(obby), scale.z - abs(obbz));
+			D3DXVECTOR3 penetration = D3DXVECTOR3(SIZE - abs(obbx), SIZE - abs(obby), SIZE - abs(obbz));
 
 			if (penetration.x < penetration.z && penetration.x < penetration.y)
 			{
@@ -286,6 +287,11 @@ void Player::CollisionUpdate()
 				{
 					m_Position += penetration.y * up;
 					m_Velocity.y = 0.0f;            //上に乗ったら垂直速度を0にする
+
+					if (Input::GetKeyTrigger(VK_SPACE))
+					{
+						m_Velocity.y = 0.25f;
+					}
 				}
 				else
 				{
