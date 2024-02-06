@@ -69,3 +69,10 @@ struct PS_IN
 	float4 Diffuse		: COLOR0;
 	float2 TexCoord		: TEXCOORD0;
 };
+
+cbuffer ParamBuffer : register(b6)
+{
+    float dissolveThreshold;
+    float dissolveRange;
+    float2 dummy[2];
+}
