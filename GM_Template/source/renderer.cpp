@@ -17,7 +17,7 @@ ID3D11Buffer* Renderer::m_ViewBuffer{};
 ID3D11Buffer* Renderer::m_ProjectionBuffer{};
 ID3D11Buffer* Renderer::m_MaterialBuffer{};
 ID3D11Buffer* Renderer::m_LightBuffer{};
-
+ID3D11Buffer* Renderer::m_ParameterBuffer = NULL;
 
 ID3D11DepthStencilState* Renderer::m_DepthStateEnable{};
 ID3D11DepthStencilState* Renderer::m_DepthStateDisable{};
@@ -365,7 +365,10 @@ void Renderer::SetLight(LIGHT Light)
 	m_DeviceContext->UpdateSubresource(m_LightBuffer, 0, NULL, &Light, 0, 0);
 }
 
-
+void Renderer::SetParameter(PARAMETER Parameter)
+{
+	m_DeviceContext->UpdateSubresource(m_ParameterBuffer, 0, NULL, &Parameter, 0, 0);
+}
 
 
 

@@ -11,6 +11,7 @@ private:
 	class Audio* m_BGM1{};
 	class Audio* m_BGM2{};
 	class GrassBlock* grassBlock[fieldSizeX*fieldSizeZ]{};
+	class Wipe* wipe{};
 
 	static float m_bump;
 	static float m_maxHeight;

@@ -10,6 +10,7 @@
 #include "grassBlock.h"
 #include "simple3d.h"
 #include "fade.h"
+#include "wipe.h"
 #include "game.h"
 
 std::random_device rd2;
@@ -67,6 +68,8 @@ void Title::Init()
 
     Fade* fade = AddGameObject<Fade>(2);
     fade->FadeIn();
+
+    wipe = AddGameObject<Wipe>(2);
 
     // インタラクティブミュージック(縦の遷移)
 	m_BGM1 = AddGameObject<GameObject>(0)->AddComponent<Audio>();
