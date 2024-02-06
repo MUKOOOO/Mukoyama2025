@@ -15,9 +15,7 @@ Scene* Manager::m_NextScene{};
 void Manager::Init()
 {
 	Renderer::Init();
-#ifndef Debag
 	ImguiManager::Init();
-#endif // !Debag
 	Input::Init();
 	Audio::InitMaster();
 
@@ -31,9 +29,7 @@ void Manager::Uninit()
 
 	Audio::UninitMaster;
 	Input::Uninit();
-#ifndef Debag
 	ImguiManager::Uninit();
-#endif // !Debag
 	Renderer::Uninit();
 }
 
@@ -62,14 +58,14 @@ void Manager::Draw()
 {
 	Renderer::Begin();
 
-#ifndef Debag
+#ifdef _DEBUG
 	ImguiManager::Begin();
-#endif // !Debag
+#endif // !Debug
 
 	m_Scene->Draw();
 	
-#ifndef Debag
+#ifdef _DEBUG
 	ImguiManager::End();
-#endif // !Debag
+#endif // !Debug
 	Renderer::End();
 }
