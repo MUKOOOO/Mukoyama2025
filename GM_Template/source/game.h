@@ -17,11 +17,9 @@ private:
 
 	class Audio* m_BGM{};
 	class Player* player{};
-	class Score* score{};
+	class BreakMap* m_BreakMap{};
 
 	int m_ArchiveNumber[BLOCK_POSITION] = {-1};
-	int m_BreakMap;
-	int m_Frame;
 
 public:
 	void Init();
@@ -30,6 +28,5 @@ public:
 
 	void GameClear();
 	void ChangeRandomBlock();
-	int GetFrame() { return m_Frame; }
 	
 };

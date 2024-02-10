@@ -6,7 +6,7 @@
  enum PlayerCollision
 {
 	NONE,
-	GOAL
+	WARP_BLOCK
 };
 
 class Player : public GameObject

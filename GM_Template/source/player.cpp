@@ -5,7 +5,7 @@
 #include "scene.h"
 #include "player.h"
 #include "simple3d.h"
-#include "goal.h"
+#include "warpBlock.h"
 #include "shadow.h"
 #include "hitEffect.h"
 #include <XInput.h>
@@ -304,13 +304,13 @@ void Player::CollisionUpdate()
 
 	// Goa----------------------------------------------------------------
 
-	auto goals = scene->GetGameObjects<Goal>();
-	for (Goal* goal : goals)
+	auto warpBlocks = scene->GetGameObjects<WarpBlock>();
+	for (WarpBlock* warpBlock : warpBlocks)
 	{
-		D3DXVECTOR3 position	= goal->GetPosition();
-		D3DXVECTOR3 scale		= goal->GetScale();
-		D3DXVECTOR3 right		= goal->GetRight();
-		D3DXVECTOR3 forward		= goal->GetForward();
+		D3DXVECTOR3 position	= warpBlock->GetPosition();
+		D3DXVECTOR3 scale		= warpBlock->GetScale();
+		D3DXVECTOR3 right		= warpBlock->GetRight();
+		D3DXVECTOR3 forward		= warpBlock->GetForward();
 		D3DXVECTOR3 direction	= m_Position - position;
 		float abbx = D3DXVec3Dot(&direction, &right);
 		float abbz = D3DXVec3Dot(&direction, &forward);
@@ -320,7 +320,7 @@ void Player::CollisionUpdate()
 		{
 			if (m_Position.y < position.y + scale.y)
 			{
-				m_PlayerCollision = GOAL;
+				m_PlayerCollision = WARP_BLOCK;
 			}
 		}
 	}

@@ -1,17 +1,20 @@
 #include "main.h"
 #include "manager.h"
 #include "renderer.h"
+#include "input.h"
 #include "audio.h"
 #include "game.h"
-#include "input.h"
+
 #include "camera.h"
-#include "sky.h"
 #include "field.h"
 #include "player.h"
+#include "sky.h"
 #include "simple3d.h"
-#include "goal.h"
+#include "warpBlock.h"
+
+#include "breakMap.h"
 #include "hitEffect.h"
-#include "score.h"
+
 
 std::random_device rd;
 std::mt19937 gen(rd());
@@ -27,7 +30,7 @@ void Game::Init()
 	e_sceneName = SCENE_NAME::STAGE;
 
 	Simple3d().Load();
-	Goal().Load();
+	WarpBlock().Load();
 
 	//ブロックが配置される可能性のある位置を設定
 	for (int horizontal = 0; horizontal < 4; horizontal++)
@@ -117,16 +120,12 @@ void Game::Init()
 		m_RandomBlock[i*2+1]->SetPosition(D3DXVECTOR3(pos.x,1.0f,pos.z));
 	}
 
-	AddGameObject<Goal>(1);
+	AddGameObject<WarpBlock>(1);
 
 	player = AddGameObject<Player>(1);
 	player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.0f));
 
-	score = AddGameObject<Score>(2);
-
-	m_BreakMap = 1;
-	m_Frame = 0;
-	score->SetScore(1);
+	m_BreakMap = AddGameObject<BreakMap>(2);
 
 	m_BGM = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_BGM->Load("asset\\sound\\Suno.wav");
@@ -137,7 +136,7 @@ void Game::Uninit()
 {
 	Scene::Uninit();
 
-	Goal().Unload();
+	WarpBlock().Unload();
 	Simple3d().Unload();
 }
 
@@ -146,12 +145,12 @@ void Game::Update()
 	Scene::Update();
 
 	// ゴールブロックと衝突した場合の処理
-	if (player->GetPlayerCollision() == GOAL)
+	if (player->GetPlayerCollision() == WARP_BLOCK)
 	{
 		player->SetPlayerCollision(NONE);
 
 		// 突破したマップの数が指定の数と異なる場合ダンジョンを再生成
-		if (m_BreakMap == 3)
+		if (m_BreakMap->GetBreakMap() == 3)
 		{
 			GameClear();
 		}
@@ -159,19 +158,14 @@ void Game::Update()
 		{
 			player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.0f));
 			ChangeRandomBlock();
-			m_BreakMap++;
-			score->SetScore(m_BreakMap);
+			m_BreakMap->AddBreakMap(1);
 		}			
-	}
-
-	m_Frame++;
-
-	if (m_Frame >= 12)
-	{
-		m_Frame = 0;
 	}
 }
 
+/// <summary>
+/// ブロックの配置を変更する関数
+/// </summary>
 void Game::ChangeRandomBlock()
 {
 	for (int i = 0; i < RANDOM_BLOCK / 2; i++)

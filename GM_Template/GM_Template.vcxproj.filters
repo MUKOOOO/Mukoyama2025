@@ -19,6 +19,15 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{4be363f8-d448-421d-87dd-02e170d76f7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{5b5a57b5-9473-486d-ac01-6c0b66d180a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object">
+      <UniqueIdentifier>{27cc7cfe-e17f-4c8a-9991-8a3a9efac66d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui/ux">
+      <UniqueIdentifier>{e90bad68-df45-4618-88db-eb1385e79403}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\common.hlsl">
@@ -54,9 +63,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="source\scene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="source\gameObject.h">
@@ -110,16 +116,7 @@
     <ClInclude Include="source\hitEffect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="source\goal.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\score.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="source\sprite.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\title.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="source\audio.h">
@@ -143,6 +140,18 @@
     <ClInclude Include="source\wipe.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="source\game.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\warpBlock.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\breakMap.h">
+      <Filter>ui/ux</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -155,9 +164,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="source\renderer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="source\camera.cpp">
@@ -202,19 +208,7 @@
     <ClCompile Include="source\hitEffect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="source\pch.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\goal.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\score.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="source\sprite.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\title.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="source\audio.cpp">
@@ -234,6 +228,18 @@
     </ClCompile>
     <ClCompile Include="source\wipe.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\warpBlock.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\breakMap.cpp">
+      <Filter>ui/ux</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

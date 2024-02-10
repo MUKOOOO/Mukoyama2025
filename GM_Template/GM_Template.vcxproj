@@ -225,7 +225,7 @@
     <ClInclude Include="source\game.h" />
     <ClInclude Include="source\gameObject.h" />
     <ClInclude Include="source\grassBlock.h" />
-    <ClInclude Include="source\goal.h" />
+    <ClInclude Include="source\warpBlock.h" />
     <ClInclude Include="source\hitEffect.h" />
     <ClInclude Include="source\imgui\imconfig.h" />
     <ClInclude Include="source\imgui\imgui.h" />
@@ -244,7 +244,7 @@
     <ClInclude Include="source\player.h" />
     <ClInclude Include="source\renderer.h" />
     <ClInclude Include="source\scene.h" />
-    <ClInclude Include="source\score.h" />
+    <ClInclude Include="source\breakMap.h" />
     <ClInclude Include="source\shadow.h" />
     <ClInclude Include="source\simple3d.h" />
     <ClInclude Include="source\sky.h" />
@@ -259,7 +259,7 @@
     <ClCompile Include="source\field.cpp" />
     <ClCompile Include="source\game.cpp" />
     <ClCompile Include="source\grassBlock.cpp" />
-    <ClCompile Include="source\goal.cpp" />
+    <ClCompile Include="source\warpBlock.cpp" />
     <ClCompile Include="source\hitEffect.cpp" />
     <ClCompile Include="source\imgui\imgui.cpp" />
     <ClCompile Include="source\imgui\imguiManager.cpp" />
@@ -273,15 +273,9 @@
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\manager.cpp" />
     <ClCompile Include="source\model.cpp" />
-    <ClCompile Include="source\pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="source\player.cpp" />
     <ClCompile Include="source\renderer.cpp" />
-    <ClCompile Include="source\score.cpp" />
+    <ClCompile Include="source\breakMap.cpp" />
     <ClCompile Include="source\shadow.cpp" />
     <ClCompile Include="source\simple3d.cpp" />
     <ClCompile Include="source\sky.cpp" />
