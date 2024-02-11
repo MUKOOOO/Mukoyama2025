@@ -94,7 +94,7 @@ void Game::Init()
 	m_RandomBlock[0]->SetPosition(pos);
 
 	// ブロックを配置(ランダム)----------------------------------------------------------------
-	for (int i = 0; i < RANDOM_BLOCK / 2; i++)
+	for (int i = 0; i <= RANDOM_BLOCK / 2; i++)
 	{
 		m_RandomBlock[i*2] = AddGameObject<Simple3d>(1);
 		m_RandomBlock[i*2+1] = AddGameObject<Simple3d>(1);
@@ -173,7 +173,7 @@ void Game::ChangeRandomBlock()
 		m_ArchiveNumber[i] = Random(0, 79);
 		D3DXVECTOR3 pos = m_BlockPosition[m_ArchiveNumber[i]];
 
-		for (int q = 0; q < RANDOM_BLOCK / 2; q++)
+		for (int q = 0; q <= RANDOM_BLOCK / 2; q++)
 		{
 			if (m_ArchiveNumber[q] = -1)
 			{
