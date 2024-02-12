@@ -10,7 +10,7 @@ Model* Coin::m_Model{};
 void Coin::Load()
 {
 	m_Model = new Model();
-	m_Model->Load("asset\\gift\\block03.obj");
+	m_Model->Load("asset\\model\\coin.obj");
 }
 
 void Coin::Unload()
@@ -21,9 +21,9 @@ void Coin::Unload()
 
 void Coin::Init()
 {
-	m_Position = D3DXVECTOR3(0.5f, 0.1f, 12.5f);
-	m_Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Scale = D3DXVECTOR3(0.5f, 0.5f, 0.5f);
+	m_Position = D3DXVECTOR3(10.0f, 0.25f, 0.5f);
+	m_Rotation = D3DXVECTOR3(D3DX_PI/2, 0.0f, 0.0f);
+	m_Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout,
 		"shader\\vertexLightingVS.cso");
@@ -44,6 +44,8 @@ void Coin::Uninit()
 void Coin::Update()
 {
 	GameObject::Update();
+
+	m_Rotation.z -= 0.05f;
 }
 
 void Coin::Draw()

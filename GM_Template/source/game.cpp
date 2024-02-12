@@ -11,6 +11,7 @@
 #include "sky.h"
 #include "simple3d.h"
 #include "warpBlock.h"
+#include "coin.h"
 
 #include "breakMap.h"
 #include "hitEffect.h"
@@ -29,6 +30,7 @@ void Game::Init()
 {
 	e_sceneName = SCENE_NAME::STAGE;
 
+	Coin().Load();
 	Simple3d().Load();
 	WarpBlock().Load();
 
@@ -120,6 +122,8 @@ void Game::Init()
 		m_RandomBlock[i*2+1]->SetPosition(D3DXVECTOR3(pos.x,1.0f,pos.z));
 	}
 
+	AddGameObject<Coin>(1);
+
 	AddGameObject<WarpBlock>(1);
 
 	player = AddGameObject<Player>(1);
@@ -138,6 +142,7 @@ void Game::Uninit()
 
 	WarpBlock().Unload();
 	Simple3d().Unload();
+	Coin().Unload();
 }
 
 void Game::Update()
