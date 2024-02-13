@@ -155,6 +155,9 @@
     <ClInclude Include="source\coin.h">
       <Filter>object</Filter>
     </ClInclude>
+    <ClInclude Include="source\enemy.h">
+      <Filter>object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -245,6 +248,9 @@
       <Filter>ui/ux</Filter>
     </ClCompile>
     <ClCompile Include="source\coin.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\enemy.cpp">
       <Filter>object</Filter>
     </ClCompile>
   </ItemGroup>

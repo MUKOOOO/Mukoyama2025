@@ -2,7 +2,7 @@
 #include "renderer.h"
 #include "breakMap.h"
 
-#define XPOS 525.0f
+#define XPOS 550.0f
 #define YPOS 32.0f
 
 void BreakMap::Init()

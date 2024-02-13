@@ -4,6 +4,7 @@
 #include "input.h"
 #include "scene.h"
 #include "player.h"
+#include "enemy.h"
 #include "simple3d.h"
 #include "warpBlock.h"
 #include "shadow.h"
@@ -60,6 +61,8 @@ void Player::Update()
 	if (m_IsEnable == false) return;
 
 	Scene* scene = Manager::GetScene();
+
+	m_PlayerCollision = NONE;
 
 	m_GroundHeight = 0.0f;
 	m_GroundHeightTemp = 0.0f;
@@ -252,7 +255,6 @@ void Player::CollisionUpdate()
 	Scene* scene = Manager::GetScene();
 
 	// Simple3d----------------------------------------------------------------
-	//直方体
 	auto boxs = scene->GetGameObjects<Simple3d>();    //リストを取得
 	for (Simple3d* box : boxs)                        //範囲forループ
 	{
@@ -302,8 +304,7 @@ void Player::CollisionUpdate()
 		}
 	}
 
-	// Goa----------------------------------------------------------------
-
+	// warpBlock----------------------------------------------------------------
 	auto warpBlocks = scene->GetGameObjects<WarpBlock>();
 	for (WarpBlock* warpBlock : warpBlocks)
 	{
@@ -321,6 +322,28 @@ void Player::CollisionUpdate()
 			if (m_Position.y < position.y + scale.y)
 			{
 				m_PlayerCollision = WARP_BLOCK;
+			}
+		}
+	}
+
+	// enemy----------------------------------------------------------------
+	auto enemys = scene->GetGameObjects<Enemy>();
+	for (Enemy* enemy : enemys)
+	{
+		D3DXVECTOR3 position = enemy->GetPosition();
+		D3DXVECTOR3 scale = enemy->GetScale();
+		D3DXVECTOR3 right = enemy->GetRight();
+		D3DXVECTOR3 forward = enemy->GetForward();
+		D3DXVECTOR3 direction = m_Position - position;
+		float abbx = D3DXVec3Dot(&direction, &right);
+		float abbz = D3DXVec3Dot(&direction, &forward);
+
+		//OBB
+		if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)
+		{
+			if (m_Position.y < position.y + scale.y)
+			{
+				m_PlayerCollision = ENEMY;
 			}
 		}
 	}

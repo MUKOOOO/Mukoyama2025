@@ -11,7 +11,7 @@
 #define Z_MAX 4.0f
 #define Z_MIN -4.0f
 
-#define FOLLOW D3DXVECTOR3(0.0f,8.0f,-2.0f)
+#define FOLLOW D3DXVECTOR3(0.0f,10.0f,-2.0f)
 #define LOOKINGDOWN D3DXVECTOR3(0.0f,1.0f,-4.0f)
 
 #define DEBAG_CAMERA_SPEED 0.25f

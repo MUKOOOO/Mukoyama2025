@@ -16,6 +16,7 @@ private:
 	class Simple3d* m_RandomBlock[RANDOM_BLOCK]{};
 
 	class Audio* m_BGM{};
+	class Enemy* m_Enemy{};
 	class Player* player{};
 	class BreakMap* m_BreakMap{};
 

@@ -90,6 +90,18 @@ void ImguiManager::StageScene()
     ImGui::NewFrame();
     ImGui::Begin("Test");
 
+    //ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+    /*static float value[180];
+    for (int i = 0; i < 179; i++)
+    {
+        value[i] = value[i + 1];
+    }
+
+    value[179] = 1ImGui::GetIO().DeltaTime * 1000.0f;
+
+    ImGui::PlotLines("", value, sizeof(value) / sizeof(float), 0, NULL, 0.0f, 100.0f, ImVec2(0, 50));*/
+
     vec4a[0] = player->GetPosition().x;
     vec4a[1] = player->GetPosition().y;
     vec4a[2] = player->GetPosition().z;

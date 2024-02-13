@@ -6,10 +6,12 @@
 #include "game.h"
 
 #include "camera.h"
+#include "enemy.h"
 #include "field.h"
 #include "player.h"
 #include "sky.h"
 #include "simple3d.h"
+#include "title.h"
 #include "warpBlock.h"
 #include "coin.h"
 
@@ -31,6 +33,7 @@ void Game::Init()
 	e_sceneName = SCENE_NAME::STAGE;
 
 	Coin().Load();
+	Enemy().Load();
 	Simple3d().Load();
 	WarpBlock().Load();
 
@@ -122,6 +125,9 @@ void Game::Init()
 		m_RandomBlock[i*2+1]->SetPosition(D3DXVECTOR3(pos.x,1.0f,pos.z));
 	}
 
+	m_Enemy = AddGameObject<Enemy>(1);
+	m_Enemy->SetPosition(D3DXVECTOR3(Random(0, 14), 0.0f, Random(0, 14)));;
+
 	AddGameObject<Coin>(1);
 
 	AddGameObject<WarpBlock>(1);
@@ -142,6 +148,7 @@ void Game::Uninit()
 
 	WarpBlock().Unload();
 	Simple3d().Unload();
+	Enemy().Unload();
 	Coin().Unload();
 }
 
@@ -149,11 +156,11 @@ void Game::Update()
 {
 	Scene::Update();
 
-	// ゴールブロックと衝突した場合の処理
-	if (player->GetPlayerCollision() == WARP_BLOCK)
+	// プレイヤーの衝突判定
+	switch (player->GetPlayerCollision())
 	{
-		player->SetPlayerCollision(NONE);
-
+	// ワープブロックと衝突した場合の処理
+	case WARP_BLOCK:
 		// 突破したマップの数が指定の数と異なる場合ダンジョンを再生成
 		if (m_BreakMap->GetBreakMap() == 3)
 		{
@@ -164,7 +171,13 @@ void Game::Update()
 			player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.0f));
 			ChangeRandomBlock();
 			m_BreakMap->AddBreakMap(1);
-		}			
+		}
+		break;
+	case ENEMY:
+		Manager::SetScene<Title>();
+		break;
+	default:
+		break;
 	}
 }
 
