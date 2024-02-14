@@ -228,7 +228,7 @@
     <ClInclude Include="source\gameObject.h" />
     <ClInclude Include="source\grassBlock.h" />
     <ClInclude Include="source\warpBlock.h" />
-    <ClInclude Include="source\hitEffect.h" />
+    <ClInclude Include="source\footSmoke.h" />
     <ClInclude Include="source\imgui\imconfig.h" />
     <ClInclude Include="source\imgui\imgui.h" />
     <ClInclude Include="source\imgui\imguiManager.h" />
@@ -264,7 +264,7 @@
     <ClCompile Include="source\game.cpp" />
     <ClCompile Include="source\grassBlock.cpp" />
     <ClCompile Include="source\warpBlock.cpp" />
-    <ClCompile Include="source\hitEffect.cpp" />
+    <ClCompile Include="source\footSmoke.cpp" />
     <ClCompile Include="source\imgui\imgui.cpp" />
     <ClCompile Include="source\imgui\imguiManager.cpp" />
     <ClCompile Include="source\imgui\imgui_demo.cpp" />

@@ -9,14 +9,14 @@
 #include "enemy.h"
 #include "field.h"
 #include "player.h"
-#include "sky.h"
 #include "simple3d.h"
 #include "title.h"
 #include "warpBlock.h"
 #include "coin.h"
 
 #include "breakMap.h"
-#include "hitEffect.h"
+#include "footSmoke.h"
+#include "wipe.h"
 
 
 std::random_device rd;
@@ -57,7 +57,6 @@ void Game::Init()
 	}
 
 	AddGameObject<Camera>(0)->ChangeCameraType(Follow);
-	AddGameObject<Sky>(1);
 	AddGameObject<Field>(1)->SetPosition(D3DXVECTOR3(6.5f,0.0f,6.5f));
 
 	// 前後左右に柵を配置----------------------------------------------------------------
@@ -135,6 +134,7 @@ void Game::Init()
 	player = AddGameObject<Player>(1);
 	player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.0f));
 
+	//Wipe* wipe = AddGameObject<Wipe>(2);
 	m_BreakMap = AddGameObject<BreakMap>(2);
 
 	m_BGM = AddGameObject<GameObject>(0)->AddComponent<Audio>();

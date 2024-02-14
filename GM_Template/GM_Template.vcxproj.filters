@@ -25,7 +25,7 @@
     <Filter Include="object">
       <UniqueIdentifier>{27cc7cfe-e17f-4c8a-9991-8a3a9efac66d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ui/ux">
+    <Filter Include="ui/ux/effect">
       <UniqueIdentifier>{e90bad68-df45-4618-88db-eb1385e79403}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -113,9 +113,6 @@
     <ClInclude Include="source\imgui\imgui_impl_dx11.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="source\hitEffect.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="source\sprite.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -137,9 +134,6 @@
     <ClInclude Include="source\fade.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="source\wipe.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="source\game.h">
       <Filter>scene</Filter>
     </ClInclude>
@@ -150,13 +144,19 @@
       <Filter>object</Filter>
     </ClInclude>
     <ClInclude Include="source\breakMap.h">
-      <Filter>ui/ux</Filter>
+      <Filter>ui/ux/effect</Filter>
     </ClInclude>
     <ClInclude Include="source\coin.h">
       <Filter>object</Filter>
     </ClInclude>
     <ClInclude Include="source\enemy.h">
       <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\footSmoke.h">
+      <Filter>ui/ux/effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\wipe.h">
+      <Filter>ui/ux/effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -211,9 +211,6 @@
     <ClCompile Include="source\imgui\imgui_impl_win32.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="source\hitEffect.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="source\sprite.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -232,9 +229,6 @@
     <ClCompile Include="source\fade.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="source\wipe.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="source\game.cpp">
       <Filter>scene</Filter>
     </ClCompile>
@@ -245,13 +239,19 @@
       <Filter>object</Filter>
     </ClCompile>
     <ClCompile Include="source\breakMap.cpp">
-      <Filter>ui/ux</Filter>
+      <Filter>ui/ux/effect</Filter>
     </ClCompile>
     <ClCompile Include="source\coin.cpp">
       <Filter>object</Filter>
     </ClCompile>
     <ClCompile Include="source\enemy.cpp">
       <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\footSmoke.cpp">
+      <Filter>ui/ux/effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\wipe.cpp">
+      <Filter>ui/ux/effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

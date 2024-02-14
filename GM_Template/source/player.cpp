@@ -4,17 +4,20 @@
 #include "input.h"
 #include "scene.h"
 #include "player.h"
+#include "coin.h"
 #include "enemy.h"
 #include "simple3d.h"
 #include "warpBlock.h"
+#include "footSmoke.h"
 #include "shadow.h"
-#include "hitEffect.h"
 #include <XInput.h>
+
 
 #define XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE  7849
 #define XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE 8689
 #define GRAVITY 0.01f
 #define SIZE 0.8f
+
 
 void Player::Init()
 {
@@ -92,10 +95,10 @@ void Player::Update()
 		m_Velocity.z = m_Speed;
 
 		// 歩行エフェクト
-		if (!scene->GetGameObject<HitEffect>())
+		if (!scene->GetGameObject<FootSmoke>())
 		{
-			D3DXVECTOR3 offset = D3DXVECTOR3(0.0f, 0.25f, -m_Scale.z);
-			scene->AddGameObject<HitEffect>(1)->SetPosition(m_Position + offset);
+			D3DXVECTOR3 offset = D3DXVECTOR3(0.0f, 0.25f, -m_Scale.z/2);
+			scene->AddGameObject<FootSmoke>(1)->SetPosition(m_Position + offset);
 		}
 	}
 	if (Input::GetKeyPress('A'))
@@ -103,10 +106,10 @@ void Player::Update()
 		m_Velocity.x = -m_Speed;
 
 		// 歩行エフェクト
-		if (!scene->GetGameObject<HitEffect>())
+		if (!scene->GetGameObject<FootSmoke>())
 		{
-			D3DXVECTOR3 offset = D3DXVECTOR3(m_Scale.x, 0.25f, 0.0f);
-			scene->AddGameObject<HitEffect>(1)->SetPosition(m_Position + offset);
+			D3DXVECTOR3 offset = D3DXVECTOR3(m_Scale.x/2, 0.25f, 0.0f);
+			scene->AddGameObject<FootSmoke>(1)->SetPosition(m_Position + offset);
 		}
 	}
 	if (Input::GetKeyPress('S'))
@@ -114,10 +117,10 @@ void Player::Update()
 		m_Velocity.z = -m_Speed;
 
 		// 歩行エフェクト
-		if (!scene->GetGameObject<HitEffect>())
+		if (!scene->GetGameObject<FootSmoke>())
 		{
-			D3DXVECTOR3 offset = D3DXVECTOR3(0.0f, 0.25f, m_Scale.z);
-			scene->AddGameObject<HitEffect>(1)->SetPosition(m_Position + offset);
+			D3DXVECTOR3 offset = D3DXVECTOR3(0.0f, 0.25f, m_Scale.z/2);
+			scene->AddGameObject<FootSmoke>(1)->SetPosition(m_Position + offset);
 		}
 	}
 	if (Input::GetKeyPress('D'))
@@ -125,10 +128,10 @@ void Player::Update()
 		m_Velocity.x = m_Speed;
 
 		// 歩行エフェクト
-		if (!scene->GetGameObject<HitEffect>())
+		if (!scene->GetGameObject<FootSmoke>())
 		{
-			D3DXVECTOR3 offset = D3DXVECTOR3(-m_Scale.x, 0.25f, 0.0f);
-			scene->AddGameObject<HitEffect>(1)->SetPosition(m_Position + offset);
+			D3DXVECTOR3 offset = D3DXVECTOR3(-m_Scale.x/2, 0.25f, 0.0f);
+			scene->AddGameObject<FootSmoke>(1)->SetPosition(m_Position + offset);
 		}
 	}
 
@@ -250,6 +253,7 @@ void Player::Draw()
 	m_Model->Draw();
 }
 
+// 当たり判定全般の処理
 void Player::CollisionUpdate()
 {
 	Scene* scene = Manager::GetScene();
@@ -304,24 +308,24 @@ void Player::CollisionUpdate()
 		}
 	}
 
-	// warpBlock----------------------------------------------------------------
-	auto warpBlocks = scene->GetGameObjects<WarpBlock>();
-	for (WarpBlock* warpBlock : warpBlocks)
+	// coin----------------------------------------------------------------
+	auto coins = scene->GetGameObjects<Coin>();
+	for (Coin* coin : coins)
 	{
-		D3DXVECTOR3 position	= warpBlock->GetPosition();
-		D3DXVECTOR3 scale		= warpBlock->GetScale();
-		D3DXVECTOR3 right		= warpBlock->GetRight();
-		D3DXVECTOR3 forward		= warpBlock->GetForward();
-		D3DXVECTOR3 direction	= m_Position - position;
+		D3DXVECTOR3 position = coin->GetPosition();
+		D3DXVECTOR3 scale = coin->GetScale();
+		D3DXVECTOR3 right = coin->GetRight();
+		D3DXVECTOR3 forward = coin->GetForward();
+		D3DXVECTOR3 direction = m_Position - position;
 		float abbx = D3DXVec3Dot(&direction, &right);
 		float abbz = D3DXVec3Dot(&direction, &forward);
 
 		//OBB
-		if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)
+		if (fabs(abbx) < scale.x/2 && fabs(abbz) < scale.z/2)
 		{
-			if (m_Position.y < position.y + scale.y)
+			if (m_Position.y < position.y + scale.y/2)
 			{
-				m_PlayerCollision = WARP_BLOCK;
+				coin->SetDestroy();
 			}
 		}
 	}
@@ -344,6 +348,28 @@ void Player::CollisionUpdate()
 			if (m_Position.y < position.y + scale.y)
 			{
 				m_PlayerCollision = ENEMY;
+			}
+		}
+	}
+
+	// warpBlock----------------------------------------------------------------
+	auto warpBlocks = scene->GetGameObjects<WarpBlock>();
+	for (WarpBlock* warpBlock : warpBlocks)
+	{
+		D3DXVECTOR3 position	= warpBlock->GetPosition();
+		D3DXVECTOR3 scale		= warpBlock->GetScale();
+		D3DXVECTOR3 right		= warpBlock->GetRight();
+		D3DXVECTOR3 forward		= warpBlock->GetForward();
+		D3DXVECTOR3 direction	= m_Position - position;
+		float abbx = D3DXVec3Dot(&direction, &right);
+		float abbz = D3DXVec3Dot(&direction, &forward);
+
+		//OBB
+		if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)
+		{
+			if (m_Position.y < position.y + scale.y)
+			{
+				m_PlayerCollision = WARP_BLOCK;
 			}
 		}
 	}

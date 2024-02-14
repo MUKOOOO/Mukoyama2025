@@ -6,8 +6,9 @@
  enum PlayerCollision
 {
 	NONE,
+	COIN,
+	ENEMY,
 	WARP_BLOCK,
-	ENEMY
 };
 
 class Player : public GameObject

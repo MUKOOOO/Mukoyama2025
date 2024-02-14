@@ -29,7 +29,7 @@ void Wipe::Update()
 {
 	GameObject::Update();
 
-	m_Threshold -= 0.05f;
+	m_Threshold += 0.5f;
 }
 
 void Wipe::Draw()
@@ -44,11 +44,11 @@ void Wipe::Draw()
 	// マトリクス設定
 	Renderer::SetWorldViewProjection2D();
 
-	//PARAMETER param;
-	//ZeroMemory(&param, sizeof(param));
-	//param.dissolveThreshold = m_Threshold;
-	//param.dissolveRange = 0.1f;
-	//Renderer::SetParameter(param);
+	PARAMETER param;
+	ZeroMemory(&param, sizeof(param));
+	param.dissolveThreshold = m_Threshold;
+	param.dissolveRange = 0.1f;
+	Renderer::SetParameter(param);
 
 	GameObject::Draw();
 }

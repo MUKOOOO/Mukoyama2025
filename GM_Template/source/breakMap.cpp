@@ -3,7 +3,7 @@
 #include "breakMap.h"
 
 #define XPOS 550.0f
-#define YPOS 32.0f
+#define YPOS 8.0f
 
 void BreakMap::Init()
 {

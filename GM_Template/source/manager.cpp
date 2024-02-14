@@ -19,7 +19,7 @@ void Manager::Init()
 	Input::Init();
 	Audio::InitMaster();
 
-	SetScene<Title>();
+	SetScene<Game>();
 }
 
 void Manager::Uninit()
