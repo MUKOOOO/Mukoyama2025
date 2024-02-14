@@ -8,6 +8,7 @@
 #include "enemy.h"
 #include "simple3d.h"
 #include "warpBlock.h"
+#include "coinCount.h"
 #include "footSmoke.h"
 #include "shadow.h"
 #include <XInput.h>
@@ -326,6 +327,8 @@ void Player::CollisionUpdate()
 			if (m_Position.y < position.y + scale.y/2)
 			{
 				coin->SetDestroy();
+				CoinCount* coins = scene->GetGameObject<CoinCount>();
+				coins->AddCoin(1);
 			}
 		}
 	}

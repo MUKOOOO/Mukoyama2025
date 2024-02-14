@@ -1,6 +1,13 @@
 #pragma once
 #include"gameObject.h"
 
+enum class  CoinCountState
+{
+	NONE,
+	UP,
+	DOWN
+};
+
 class CoinCount : public GameObject
 {
 private:
@@ -10,7 +17,11 @@ private:
 	ID3D11ShaderResourceView*	m_Texture{};
 	ID3D11VertexShader*			m_VertexShader{};
 	
-	int m_BreakMap{};
+	D3DXVECTOR2 m_pos{};
+
+	int m_Coin{};
+
+	CoinCountState m_CoinCountState = CoinCountState::NONE;
 
 public:
 	void Init();
@@ -18,7 +29,6 @@ public:
 	void Update();
 	void Draw();
 
-	void AddBreakMap(int BreakMap) { m_BreakMap += BreakMap; }
-	void SetBreakMap(int BreakMap) { m_BreakMap = BreakMap; }
-	int GetBreakMap() { return m_BreakMap; }
+	void AddCoin(int BreakMap);
+	int GetCoin() { return m_Coin; }
 };

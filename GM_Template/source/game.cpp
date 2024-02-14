@@ -15,7 +15,7 @@
 #include "coin.h"
 
 #include "breakMap.h"
-#include "footSmoke.h"
+#include "coinCount.h"
 #include "wipe.h"
 
 
@@ -32,6 +32,7 @@ void Game::Init()
 {
 	e_sceneName = SCENE_NAME::STAGE;
 
+	// ÉÇÉfÉãì«Ç›çûÇ›
 	Coin().Load();
 	Enemy().Load();
 	Simple3d().Load();
@@ -127,15 +128,19 @@ void Game::Init()
 	m_Enemy = AddGameObject<Enemy>(1);
 	m_Enemy->SetPosition(D3DXVECTOR3(Random(0, 14), 0.0f, Random(0, 14)));;
 
-	AddGameObject<Coin>(1);
+	for (int i = 0; i < 100; i++)
+	{
+		AddGameObject<Coin>(1)->SetPosition(D3DXVECTOR3(Random(1, 13), 0.0f, Random(1, 13)));
+	}
 
 	AddGameObject<WarpBlock>(1);
 
 	player = AddGameObject<Player>(1);
 	player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.0f));
 
-	//Wipe* wipe = AddGameObject<Wipe>(2);
+	CoinCount* coinCount = AddGameObject<CoinCount>(2);
 	m_BreakMap = AddGameObject<BreakMap>(2);
+	//Wipe* wipe = AddGameObject<Wipe>(2);
 
 	m_BGM = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_BGM->Load("asset\\sound\\Suno.wav");
