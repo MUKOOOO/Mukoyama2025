@@ -220,6 +220,7 @@
     <ClInclude Include="source\audio.h" />
     <ClInclude Include="source\camera.h" />
     <ClInclude Include="source\coin.h" />
+    <ClInclude Include="source\coinCount.h" />
     <ClInclude Include="source\component.h" />
     <ClInclude Include="source\enemy.h" />
     <ClInclude Include="source\fade.h" />
@@ -258,6 +259,7 @@
     <ClCompile Include="source\audio.cpp" />
     <ClCompile Include="source\camera.cpp" />
     <ClCompile Include="source\coin.cpp" />
+    <ClCompile Include="source\coinCount.cpp" />
     <ClCompile Include="source\enemy.cpp" />
     <ClCompile Include="source\fade.cpp" />
     <ClCompile Include="source\field.cpp" />

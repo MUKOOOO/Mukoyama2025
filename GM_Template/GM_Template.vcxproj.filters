@@ -158,6 +158,9 @@
     <ClInclude Include="source\wipe.h">
       <Filter>ui/ux/effect</Filter>
     </ClInclude>
+    <ClInclude Include="source\coinCount.h">
+      <Filter>ui/ux/effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -251,6 +254,9 @@
       <Filter>ui/ux/effect</Filter>
     </ClCompile>
     <ClCompile Include="source\wipe.cpp">
+      <Filter>ui/ux/effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\coinCount.cpp">
       <Filter>ui/ux/effect</Filter>
     </ClCompile>
   </ItemGroup>
