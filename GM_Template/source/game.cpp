@@ -6,13 +6,14 @@
 #include "game.h"
 
 #include "camera.h"
+#include "coin.h"
 #include "enemy.h"
 #include "field.h"
 #include "player.h"
 #include "simple3d.h"
 #include "title.h"
+#include "wall.h"
 #include "warpBlock.h"
-#include "coin.h"
 
 #include "breakMap.h"
 #include "coinCount.h"
@@ -59,27 +60,9 @@ void Game::Init()
 
 	AddGameObject<Camera>(0)->ChangeCameraType(Follow);
 	AddGameObject<Field>(1)->SetPosition(D3DXVECTOR3(6.5f,0.0f,6.5f));
-
-	// 前後左右に柵を配置----------------------------------------------------------------
-	Simple3d* WallEast[14];
-	Simple3d* WallWest[14];
-	Simple3d* WallSouth[14];
-	Simple3d* WallNorth[14];
 	
-	for (int i = 0; i < 14; i++)
-	{
-		WallEast[i] = AddGameObject<Simple3d>(1);
-		WallEast[i]->SetPosition(D3DXVECTOR3(14.0f, 0.0f, (float)i * 1.0f));
-
-		WallWest[i] = AddGameObject<Simple3d>(1);
-		WallWest[i]->SetPosition(D3DXVECTOR3(-1.0f, 0.0f, (float)i * 1.0f));
-
-		WallSouth[i] = AddGameObject<Simple3d>(1);
-		WallSouth[i]->SetPosition(D3DXVECTOR3((float)i, 0.0f, 14.0f));
-
-		WallNorth[i] = AddGameObject<Simple3d>(1);
-		WallNorth[i]->SetPosition(D3DXVECTOR3((float)i, 0.0f, -1.0f));
-	}
+	// 前後左右に壁を配置----------------------------------------------------------------
+	AddGameObject<Wall>(1)->SetPosition(D3DXVECTOR3(6.5f, 2.0f, 13.5f));
 
 	// ブロックを配置(固定)----------------------------------------------------------------
 	for (int y = 0; y < 4; y++)
