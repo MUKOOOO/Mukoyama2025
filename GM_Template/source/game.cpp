@@ -33,13 +33,15 @@ void Game::Init()
 {
 	e_sceneName = SCENE_NAME::STAGE;
 
-	// モデル読み込み
+	// モデル読み込み-----------------------------------------------------------------------------------------------------------------
+
 	Coin().Load();
 	Enemy().Load();
 	Simple3d().Load();
 	WarpBlock().Load();
 
-	//ブロックが配置される可能性のある位置を設定
+	// ブロックが配置される可能性のある位置を設定-------------------------------------------------------------------------------------
+
 	for (int horizontal = 0; horizontal < 4; horizontal++)
 	{
 		for (int vertically = 0; vertically < 5; vertically++)
@@ -58,13 +60,13 @@ void Game::Init()
 		}
 	}
 
+	// オブジェクトの登録-------------------------------------------------------------------------------------------------------------
+
 	AddGameObject<Camera>(0)->ChangeCameraType(Follow);
 	AddGameObject<Field>(1)->SetPosition(D3DXVECTOR3(6.5f,0.0f,6.5f));
-	
-	// 前後左右に壁を配置----------------------------------------------------------------
 	AddGameObject<Wall>(1)->SetPosition(D3DXVECTOR3(6.5f, 2.0f, 13.5f));
 
-	// ブロックを配置(固定)----------------------------------------------------------------
+	// ブロックを配置(固定)-----------------------------------------------------------------------------------------------------------
 	for (int y = 0; y < 4; y++)
 	{
 		for (int x = 0; x < 4; x++)
@@ -81,7 +83,7 @@ void Game::Init()
 	D3DXVECTOR3 pos = m_BlockPosition[Random(0, 79)];
 	m_RandomBlock[0]->SetPosition(pos);
 
-	// ブロックを配置(ランダム)----------------------------------------------------------------
+	// ブロックを配置(ランダム)-------------------------------------------------------------------------------------------------------
 	for (int i = 0; i <= RANDOM_BLOCK / 2; i++)
 	{
 		m_RandomBlock[i*2] = AddGameObject<Simple3d>(1);
@@ -123,7 +125,7 @@ void Game::Init()
 
 	CoinCount* coinCount = AddGameObject<CoinCount>(2);
 	m_BreakMap = AddGameObject<BreakMap>(2);
-	//Wipe* wipe = AddGameObject<Wipe>(2);
+	Wipe* wipe = AddGameObject<Wipe>(2);
 
 	m_BGM = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_BGM->Load("asset\\sound\\Suno.wav");

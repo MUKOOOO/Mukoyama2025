@@ -29,7 +29,7 @@ void Wipe::Update()
 {
 	GameObject::Update();
 
-	m_Threshold += 0.5f;
+	m_Threshold += 0.011f;
 }
 
 void Wipe::Draw()

@@ -224,6 +224,10 @@ void Renderer::Init()
 	m_DeviceContext->PSSetConstantBuffers(4, 1, &m_LightBuffer);
 
 
+	bufferDesc.ByteWidth = sizeof(D3DXVECTOR4);
+
+	m_Device->CreateBuffer(&bufferDesc, NULL, &m_ParameterBuffer);
+	m_DeviceContext->PSSetConstantBuffers(6, 1, &m_ParameterBuffer);
 
 
 
