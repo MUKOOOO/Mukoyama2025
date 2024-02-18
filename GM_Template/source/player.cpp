@@ -27,7 +27,7 @@ void Player::Init()
 	m_Model = new Model();
 	m_Model->Load("asset\\model\\Player.obj");
 
-	m_Position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_Position = D3DXVECTOR3(13.0f, 0.0f, 0.0f);
 	m_Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_Scale = D3DXVECTOR3(0.5f, 0.9f, 0.5f);
 
