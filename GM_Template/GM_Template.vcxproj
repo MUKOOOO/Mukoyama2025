@@ -252,7 +252,7 @@
     <ClInclude Include="source\scene.h" />
     <ClInclude Include="source\breakMap.h" />
     <ClInclude Include="source\shadow.h" />
-    <ClInclude Include="source\simple3d.h" />
+    <ClInclude Include="source\block.h" />
     <ClInclude Include="source\sky.h" />
     <ClInclude Include="source\sprite.h" />
     <ClInclude Include="source\title.h" />
@@ -287,7 +287,7 @@
     <ClCompile Include="source\renderer.cpp" />
     <ClCompile Include="source\breakMap.cpp" />
     <ClCompile Include="source\shadow.cpp" />
-    <ClCompile Include="source\simple3d.cpp" />
+    <ClCompile Include="source\block.cpp" />
     <ClCompile Include="source\sky.cpp" />
     <ClCompile Include="source\sprite.cpp" />
     <ClCompile Include="source\title.cpp" />

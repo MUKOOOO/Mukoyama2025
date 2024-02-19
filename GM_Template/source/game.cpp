@@ -5,12 +5,12 @@
 #include "audio.h"
 #include "game.h"
 
+#include "block.h"
 #include "camera.h"
 #include "coin.h"
 #include "enemy.h"
 #include "field.h"
 #include "player.h"
-#include "simple3d.h"
 #include "title.h"
 #include "wall.h"
 #include "warpBlock.h"
@@ -37,36 +37,50 @@ void Game::Init()
 	// モデル読み込み
 	Coin().Load();
 	Enemy().Load();
-	Simple3d().Load();
+	Block().Load();
 	WarpBlock().Load();
 
 	// ブロックが配置される可能性のある位置を設定
-	for (int horizontal = 0; horizontal < 4; horizontal++)
 	{
-		for (int vertically = 0; vertically < 5; vertically++)
+		int x, z;
+
+		x = 0;
+		z = 0;
+		for (int i = 0; i < BLOCK_POSITION / 2; i++)
 		{
-			m_BlockPosition[horizontal * 10 + vertically * 2] = D3DXVECTOR3(horizontal * 3 + 2, 0.0f, vertically * 3);
-			m_BlockPosition[horizontal * 10 + vertically * 2 + 1] = D3DXVECTOR3(horizontal * 3 + 2, 0.0f, vertically * 3 + 1);
+			m_BlockPosition[i] = (D3DXVECTOR3(2.0f + x * 3.0f, 0.0f, z * 1.0f));
+
+			x++;
+			if (x % 4 == 0)
+			{
+				x = 0;
+				z++;
+				if (z % 3 - 2 == 0)
+				{
+					z++;
+				}
+			}
+		}
+
+		x = 0;
+		z = 0;
+		for (int i = 40; i < BLOCK_POSITION; i++)
+		{
+			m_BlockPosition[i] = (D3DXVECTOR3(x * 1.0f, 0.0f, 2.0f + z * 3.0f));
+
+			z++;
+			if (z % 4 == 0)
+			{
+				z = 0;
+				x++;
+				if (x % 3 - 2 == 0)
+				{
+					x++;
+				}
+			}
 		}
 	}
-
-	for (int horizontal = 0; horizontal < 4; horizontal++)
-	{
-		for (int vertically = 0; vertically < 5; vertically++)
-		{
-			m_BlockPosition[40 + horizontal * 10 + vertically * 2] = D3DXVECTOR3(vertically * 3, 0.0f, horizontal * 3 + 2);
-			m_BlockPosition[40 + horizontal * 10 + vertically * 2 + 1] = D3DXVECTOR3(vertically * 3 + 1, 0.0f, horizontal * 3 + 2);
-		}
-	}
-
-	int x, z;
-	x = 2.0f;
-	z = 2.0f;
-	for (int i = 0; i < 80; i++)
-	{
-		m_BlockPosition[i] = D3DXVECTOR3(x * 2, 0.0f, z * 3);
-	}
-
+	
 	// オブジェクトの登録
 	AddGameObject<Camera>(0)->ChangeCameraType(Follow);
 
@@ -90,33 +104,6 @@ void Game::Init()
 
 	AddGameObject<WarpBlock>(1);
 
-	// ブロックの生成(ランダム)
-	//for (int i = 0; i <= RANDOM_BLOCK / 2; i++)
-	//{
-	//	m_RandomBlock[i*2] = AddGameObject<Simple3d>(1);
-	//	m_RandomBlock[i*2+1] = AddGameObject<Simple3d>(1);
-	//	m_ArchiveNumber[i] = Random(0, 79);
-	//	D3DXVECTOR3 pos = m_BlockPosition[m_ArchiveNumber[i]];
-
-	//	// ブロックの位置の重複を無くす
-	//	for (int q = 0; q < RANDOM_BLOCK / 2; q++)
-	//	{
-	//		if (m_ArchiveNumber[q] = -1)
-	//		{
-	//			break;
-	//		}
-
-	//		while (m_ArchiveNumber[i] == m_ArchiveNumber[q])
-	//		{
-	//			m_ArchiveNumber[i] = Random(0, 79);
-	//			D3DXVECTOR3 pos = m_BlockPosition[m_ArchiveNumber[i]];
-	//		}
-	//	}
-	//	
-	//	m_RandomBlock[i*2]->SetPosition(pos);
-	//	m_RandomBlock[i*2+1]->SetPosition(D3DXVECTOR3(pos.x,1.0f,pos.z));
-	//}
-
 	// UI
 	CoinCount* coinCount = AddGameObject<CoinCount>(2);
 	m_BreakMap = AddGameObject<BreakMap>(2);
@@ -137,7 +124,7 @@ void Game::Uninit()
 	Scene::Uninit();
 
 	WarpBlock().Unload();
-	Simple3d().Unload();
+	Block().Unload();
 	Enemy().Unload();
 	Coin().Unload();
 }
@@ -151,9 +138,9 @@ void Game::Update()
 	switch (player->GetPlayerCollision())
 	{
 	case WARP_BLOCK:
-		player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.0f));
 		m_BreakMap->AddBreakMap(1);
 		MapCreate();
+		player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.0f));
 		break;
 	case ENEMY:
 		GameOver();
@@ -164,146 +151,121 @@ void Game::Update()
 	}
 }
 
-/// <summary>
-/// ブロック(固定)の生成
-/// </summary>
-void Game::CreateFixedBlock()
+// コインの生成
+void Game::CreateCoin()
 {
-	int x = 0;
-	int y = 0;
-	int z = 0;
-
-	for (int i = 0; i < DEFAULT_BLOCK;i++)
+	if (m_Coin[0] == NULL)
 	{
-		m_DefaultBlock[i] = AddGameObject<Simple3d>(1);
-		m_DefaultBlock[i]->SetPosition(D3DXVECTOR3(2.0f + x * 3.0f, 0.0f + y * 1.0f, 2.0f + z * 3.0f));
-
-		x++;
-
-		if (x / 4 == 1)
+		for (int i = 0; i < MAX_COIN; i++)
 		{
-			x = 0;
-			z++;
+			m_Coin[i] = AddGameObject<Coin>(1);
+			m_Coin[i]->SetPosition(D3DXVECTOR3(Random(1, 13), 0.0f, Random(1, 13)));
+
+			for (int x = 0; x < DEFAULT_BLOCK; x++)
+			{
+				while (m_Coin[i]->GetPosition() == m_DefaultBlock[x]->GetPosition())
+				{
+					m_Coin[i]->SetPosition(D3DXVECTOR3(Random(1, 13), 0.0f, Random(1, 13)));
+				}
+			}
+			
+		}
+	}
+	else
+	{
+		for (int i = 0; i < MAX_COIN; i++)
+		{
+			if (m_Coin[i] != NULL)m_Coin[i]->SetDestroy();
 		}
 
-		if (z / 4 == 1)
+		for (int i = 0; i < MAX_COIN; i++)
 		{
-			z = 0;
-			y++;
+			m_Coin[i] = AddGameObject<Coin>(1);
+			m_Coin[i]->SetPosition(D3DXVECTOR3(Random(1, 13), 0.0f, Random(1, 13)));
+
+			for (int x = 0; x < DEFAULT_BLOCK; x++)
+			{
+				while (m_Coin[i]->GetPosition() == m_DefaultBlock[x]->GetPosition())
+				{
+					m_Coin[i]->SetPosition(D3DXVECTOR3(Random(1, 13), 0.0f, Random(1, 13)));
+				}
+			}
 		}
 	}
 }
 
-/// <summary>
-/// ブロック(ランダム)の生成
-/// </summary>
-void Game::CreateRandomBlock()
+// ブロック(固定)の生成
+void Game::CreateFixedBlock()
 {
-	int x, z;
-
-	x = 0;
-	z = 0;
-
-	for (int i = 0; i < BLOCK_POSITION/2; i++)
+	if (m_DefaultBlock[0] == NULL)
 	{
-		m_RandomBlock[i] = AddGameObject<Simple3d>(1);
-		m_RandomBlock[i]->SetPosition(D3DXVECTOR3(2.0f + x * 3.0f, 0.0f, z * 1.0f));
+		int x = 0;
+		int y = 0;
+		int z = 0;
 
-		x++;
-		if (x % 4 == 0)
+		for (int i = 0; i < DEFAULT_BLOCK; i++)
 		{
-			x = 0;
-			z++;
-			if (z % 3 - 2 == 0)
+			m_DefaultBlock[i] = AddGameObject<Block>(1);
+			m_DefaultBlock[i]->SetPosition(D3DXVECTOR3(2.0f + x * 3.0f, 0.0f + y * 1.0f, 2.0f + z * 3.0f));
+
+			x++;
+
+			if (x / 4 == 1)
 			{
+				x = 0;
 				z++;
 			}
-		}
-	}
 
-	x = 0;
-	z = 0;
-	for (int i = 40; i < BLOCK_POSITION; i++)
-	{
-		m_RandomBlock[i] = AddGameObject<Simple3d>(1);
-		m_RandomBlock[i]->SetPosition(D3DXVECTOR3(x * 1.0f, 0.0f, 2.0f + z * 3.0f));
-
-		z++;
-		if (z % 4 == 0)
-		{
-			z = 0;
-			x++;
-			if (x % 3 - 2 == 0)
+			if (z / 4 == 1)
 			{
-				x++;
+				z = 0;
+				y++;
 			}
 		}
 	}
+}
 
-	//int y = 0;
+// ブロック(ランダム)の生成
+void Game::CreateRandomBlock()
+{
+	if (m_RandomBlock[0] == NULL)
+	{
+		for (int i = 0; i < RANDOM_BLOCK; i+=2)
+		{
+			m_RandomBlock[i] = AddGameObject<Block>(1);
+			m_RandomBlock[i]->SetPosition(D3DXVECTOR3(m_BlockPosition[Random(0, 79)]));
 
-	//if (m_RandomBlock[0] == NULL)
-	//{
-	//	for (int i = 0; i < RANDOM_BLOCK; i++)
-	//	{
-	//		m_RandomBlock[i] = AddGameObject<Simple3d>(1);
-	//		if(m_RandomBlock[i] != NULL)m_RandomBlock[i]->SetPosition(D3DXVECTOR3(Random(0, 14), 0.0f + y * 1.0f, Random(0, 14)));
+			for (int x = 0; x < RANDOM_BLOCK; x++)
+			{
+				if (x == i)break;
 
-	//		if(y / 1 == 1) y = 0;
-	//	}
+				while (m_RandomBlock[i]->GetPosition() == m_RandomBlock[x]->GetPosition())
+				{
+					m_RandomBlock[i]->SetPosition(D3DXVECTOR3(m_BlockPosition[Random(0, 79)]));
+				}
+			}
+			m_RandomBlock[i+1] = AddGameObject<Block>(1);
+			m_RandomBlock[i+1]->SetPosition(D3DXVECTOR3(m_RandomBlock[i]->GetPosition().x,1.0f, m_RandomBlock[i]->GetPosition().z));
+		}
+	}
+	else
+	{
+		for (int i = 0; i < RANDOM_BLOCK; i += 2)
+		{
+			m_RandomBlock[i]->SetPosition(D3DXVECTOR3(m_BlockPosition[Random(0, 79)]));
 
-	//	for (int i = 0; i <= RANDOM_BLOCK / 2; i++)
-	//	{
-	//		m_RandomBlock[i * 2] = AddGameObject<Simple3d>(1);
-	//		m_RandomBlock[i * 2 + 1] = AddGameObject<Simple3d>(1);
-	//		m_ArchiveNumber[i] = Random(0, RANDOM_BLOCK-1);
-	//		D3DXVECTOR3 pos = m_BlockPosition[m_ArchiveNumber[i]];
+			for (int x = 0; x < RANDOM_BLOCK; x++)
+			{
+				if (x == i)break;
 
-	//		// ブロックの位置の重複を無くす
-	//		for (int q = 0; q < RANDOM_BLOCK / 2; q++)
-	//		{
-	//			if (m_ArchiveNumber[q] = -1)
-	//			{
-	//				break;
-	//			}
-
-	//			while (m_ArchiveNumber[i] == m_ArchiveNumber[q])
-	//			{
-	//				m_ArchiveNumber[i] = Random(0, 79);
-	//				D3DXVECTOR3 pos = m_BlockPosition[m_ArchiveNumber[i]];
-	//			}
-	//		}
-
-	//		if (m_RandomBlock[i*2] != NULL)m_RandomBlock[i * 2]->SetPosition(D3DXVECTOR3(pos.x, 0.0f, pos.z));
-	//		if (m_RandomBlock[i*2+1] != NULL)m_RandomBlock[i * 2 + 1]->SetPosition(D3DXVECTOR3(pos.x, 1.0f, pos.z));
-	//	}
-	//}
-	//else
-	//{
-
-	//	for (int i = 0; i < RANDOM_BLOCK / 2; i++)
-	//	{
-	//		m_ArchiveNumber[i] = Random(0, 79);
-	//		D3DXVECTOR3 pos = m_BlockPosition[m_ArchiveNumber[i]];
-
-	//		for (int q = 0; q <= RANDOM_BLOCK / 2; q++)
-	//		{
-	//			if (m_ArchiveNumber[q] = -1)
-	//			{
-	//				break;
-	//			}
-
-	//			while (m_ArchiveNumber[i] == m_ArchiveNumber[q])
-	//			{
-	//				m_ArchiveNumber[i] = Random(0, 79);
-	//				D3DXVECTOR3 pos = m_BlockPosition[m_ArchiveNumber[i]];
-	//			}
-	//		}
-
-	//		m_RandomBlock[i * 2]->SetPosition(pos);
-	//		m_RandomBlock[i * 2 + 1]->SetPosition(D3DXVECTOR3(pos.x, 1.0f, pos.z));
-	//	}
-	//}
+				while (m_RandomBlock[i]->GetPosition() == m_RandomBlock[x]->GetPosition())
+				{
+					m_RandomBlock[i]->SetPosition(D3DXVECTOR3(m_BlockPosition[Random(0, 79)]));
+				}
+			}
+			m_RandomBlock[i + 1]->SetPosition(D3DXVECTOR3(m_RandomBlock[i]->GetPosition().x, 1.0f, m_RandomBlock[i]->GetPosition().z));
+		}
+	}
 }
 
 void Game::GameClear()
@@ -316,20 +278,18 @@ void Game::GameOver()
 
 }
 
-/// <summary>
-/// マップを生成する関数
-/// </summary>
+// マップを生成
 void Game::MapCreate()
 {
 	if (m_BreakMap->GetBreakMap() < 5)
 	{
 		// ブロック(固定)
-		//CreateFixedBlock();
+		CreateFixedBlock();
 
 		// ブロック(ランダム)
 		CreateRandomBlock();
 
-		// 敵
+		// エネミー
 		/*if (m_Enemy[0] != NULL)
 		{
 			for (int i = 0; i < MAX_ENEMY; i++)
@@ -344,33 +304,13 @@ void Game::MapCreate()
 			m_Enemy[i]->SetPosition(D3DXVECTOR3(Random(0, 14), 0.0f, Random(0, 14)));
 		}*/
 		
-		// コインの生成
-		/*if (m_Coin[0] == NULL)
-		{
-			for (int i = 0; i < 100; i++)
-			{
-				m_Coin[i] = AddGameObject<Coin>(1);
-				m_Coin[i]->SetPosition(D3DXVECTOR3(Random(1, 13), 0.0f, Random(1, 13)));
-			}
-		}
-		else
-		{
-			for (int i = 0; i < 100; i++)
-			{
-				if(m_Coin[i] != NULL)m_Coin[i]->SetDestroy();
-			}
-
-			for (int i = 0; i < 100; i++)
-			{
-				m_Coin[i] = AddGameObject<Coin>(1);
-				m_Coin[i]->SetPosition(D3DXVECTOR3(Random(1, 13), 0.0f, Random(1, 13)));
-			}
-		}*/
+		// コイン
+		CreateCoin();
 		
 	}
 	else if (m_BreakMap->GetBreakMap() == 5)
 	{
-		/*for (int i = 0; i < DEFAULT_BLOCK; i++)
+		for (int i = 0; i < DEFAULT_BLOCK; i++)
 		{
 			m_DefaultBlock[i]->SetDestroy();
 		}
@@ -378,7 +318,7 @@ void Game::MapCreate()
 		for (int i = 0; i < RANDOM_BLOCK; i++)
 		{
 			m_RandomBlock[i]->SetDestroy();
-		}*/
+		}
 	}
 	else if (m_BreakMap->GetBreakMap() < 9)
 	{

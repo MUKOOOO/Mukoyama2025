@@ -28,6 +28,9 @@
     <Filter Include="ui/ux/effect">
       <UniqueIdentifier>{e90bad68-df45-4618-88db-eb1385e79403}</UniqueIdentifier>
     </Filter>
+    <Filter Include="component">
+      <UniqueIdentifier>{8c13b667-9c7a-46f2-85c6-25ff2dde7f9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\common.hlsl">
@@ -65,25 +68,10 @@
     <ClInclude Include="source\scene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="source\gameObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="source\component.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="source\camera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="source\model.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\field.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\simple3d.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="source\imgui\imgui_impl_win32.h">
@@ -113,25 +101,7 @@
     <ClInclude Include="source\imgui\imgui_impl_dx11.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="source\sprite.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\audio.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\shadow.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\sky.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\grassBlock.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="source\perlinNoise.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\fade.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="source\game.h">
@@ -161,8 +131,41 @@
     <ClInclude Include="source\coinCount.h">
       <Filter>ui/ux/effect</Filter>
     </ClInclude>
+    <ClInclude Include="source\block.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\field.h">
+      <Filter>object</Filter>
+    </ClInclude>
     <ClInclude Include="source\wall.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fade.h">
+      <Filter>ui/ux/effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\camera.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gameObject.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sprite.h">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shadow.h">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="source\grassBlock.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sky.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\audio.h">
+      <Filter>component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -178,19 +181,7 @@
     <ClCompile Include="source\renderer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="source\camera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="source\model.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\field.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\simple3d.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="source\imgui\imgui_tables.cpp">
@@ -216,24 +207,6 @@
     </ClCompile>
     <ClCompile Include="source\imgui\imgui_impl_win32.cpp">
       <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="source\sprite.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\audio.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\shadow.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\sky.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\grassBlock.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\fade.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="source\game.cpp">
       <Filter>scene</Filter>
@@ -262,8 +235,38 @@
     <ClCompile Include="source\coinCount.cpp">
       <Filter>ui/ux/effect</Filter>
     </ClCompile>
+    <ClCompile Include="source\block.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\field.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
     <ClCompile Include="source\wall.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\fade.cpp">
+      <Filter>ui/ux/effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\camera.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\grassBlock.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sprite.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shadow.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sky.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\player.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\audio.cpp">
+      <Filter>component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

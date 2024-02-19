@@ -1,17 +1,17 @@
 #include "main.h"
 #include "manager.h"
 #include "renderer.h"
-#include "audio.h"
 #include "title.h"
-#include "perlinNoise.h"
-#include "input.h"
+#include "audio.h"
 #include "camera.h"
-#include "sky.h"
-#include "grassBlock.h"
-#include "simple3d.h"
 #include "fade.h"
-#include "wipe.h"
 #include "game.h"
+#include "grassBlock.h"
+#include "input.h"
+#include "perlinNoise.h"
+#include "sky.h"
+#include "wipe.h"
+
 
 std::random_device rd2;
 std::mt19937 gen2(rd2());
@@ -29,9 +29,8 @@ void Title::Init()
 {
     e_sceneName = SCENE_NAME::TITLE;
 
-    // 3Dモデルの読み込み
+    // モデル読み込み
     GrassBlock().Load();
-    Simple3d().Load();
 
     // オブジェクトの配置
 	camera = AddGameObject<Camera>(0);
@@ -87,7 +86,6 @@ void Title::Uninit()
 	Scene::Uninit();
 
     GrassBlock().Unload();
-    Simple3d().Unload();
 }
 
 void Title::Update()

@@ -3,6 +3,9 @@
 #include "model.h"
 #include "gameObject.h"
 
+/// <summary>
+/// エネミーオブジェクト
+/// </summary>
 class Enemy : public GameObject
 {
 private:

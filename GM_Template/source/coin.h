@@ -3,6 +3,9 @@
 #include "model.h"
 #include "gameObject.h"
 
+/// <summary>
+/// コインオブジェクト
+/// </summary>
 class Coin : public GameObject
 {
 private:

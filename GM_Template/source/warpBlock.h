@@ -3,6 +3,9 @@
 #include "model.h"
 #include "gameObject.h"
 
+/// <summary>
+/// ワープブロック
+/// </summary>
 class WarpBlock : public GameObject
 {
 private:

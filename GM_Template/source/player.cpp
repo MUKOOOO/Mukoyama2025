@@ -4,13 +4,15 @@
 #include "input.h"
 #include "scene.h"
 #include "player.h"
+#include "block.h"
 #include "coin.h"
 #include "enemy.h"
-#include "simple3d.h"
 #include "warpBlock.h"
+
 #include "coinCount.h"
 #include "footSmoke.h"
 #include "shadow.h"
+
 #include <XInput.h>
 
 
@@ -42,6 +44,7 @@ void Player::Init()
 	m_GroundHeightTemp = 0.0f;
 	m_IsEnable = true;
 	m_PlayerCollision = NONE;
+	m_VelocityTemp.z = 1;
 
 	m_Shadow = AddComponent<Shadow>();
 }
@@ -94,6 +97,7 @@ void Player::Update()
 	if (Input::GetKeyPress('W'))
 	{
 		m_Velocity.z = m_Speed;
+		m_VelocityTemp = m_Velocity;
 
 		// 歩行エフェクト
 		if (!scene->GetGameObject<FootSmoke>())
@@ -105,6 +109,7 @@ void Player::Update()
 	if (Input::GetKeyPress('A'))
 	{
 		m_Velocity.x = -m_Speed;
+		m_VelocityTemp = m_Velocity;
 
 		// 歩行エフェクト
 		if (!scene->GetGameObject<FootSmoke>())
@@ -116,6 +121,7 @@ void Player::Update()
 	if (Input::GetKeyPress('S'))
 	{
 		m_Velocity.z = -m_Speed;
+		m_VelocityTemp = m_Velocity;
 
 		// 歩行エフェクト
 		if (!scene->GetGameObject<FootSmoke>())
@@ -127,6 +133,7 @@ void Player::Update()
 	if (Input::GetKeyPress('D'))
 	{
 		m_Velocity.x = m_Speed;
+		m_VelocityTemp = m_Velocity;
 
 		// 歩行エフェクト
 		if (!scene->GetGameObject<FootSmoke>())
@@ -202,6 +209,7 @@ void Player::Update()
 	// 衝突判定
 	CollisionUpdate();
 
+#ifndef Debag
 	// ジャンプ
 	if (m_Position.y <= m_GroundHeight && m_Velocity.y <= 0.0f)
 	{
@@ -218,12 +226,14 @@ void Player::Update()
 			m_Velocity.y = 0.25f;
 		}
 	}
+#endif // !Debag
 
 	// プレイヤーの向きを変更
-	D3DXVECTOR3 toLookAt = -m_Velocity;
+	D3DXVECTOR3 toLookAt = -m_VelocityTemp;
 	D3DXVec3Normalize(&toLookAt, &toLookAt);
 	m_Rotation.y = atan2f(toLookAt.x, toLookAt.z);
 
+	// プレイヤーの位置に影を移動
 	D3DXVECTOR3 shadowPosition = m_Position;
 	shadowPosition.y = m_GroundHeight + 0.01f;
 	m_Shadow->SetPosition(shadowPosition);
@@ -259,9 +269,9 @@ void Player::CollisionUpdate()
 {
 	Scene* scene = Manager::GetScene();
 
-	// Simple3d----------------------------------------------------------------
-	auto boxs = scene->GetGameObjects<Simple3d>();    //リストを取得
-	for (Simple3d* box : boxs)                        //範囲forループ
+	// Block----------------------------------------------------------------
+	auto boxs = scene->GetGameObjects<Block>();    //リストを取得
+	for (Block* box : boxs)                        //範囲forループ
 	{
 		D3DXVECTOR3 position = box->GetPosition();
 		D3DXVECTOR3 scale = box->GetScale();
@@ -376,4 +386,9 @@ void Player::CollisionUpdate()
 			}
 		}
 	}
+
+	if (m_Position.x < 0.0f)m_Position.x = m_OldPosition.x;
+	if (m_Position.x > 13.0f)m_Position.x = m_OldPosition.x;
+	if (m_Position.z < 0.0f)m_Position.z = m_OldPosition.z;
+	if (m_Position.z > 13.0f)m_Position.z = m_OldPosition.z;
 }

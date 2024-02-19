@@ -14,13 +14,16 @@
 class Player : public GameObject
 {
 private:
-	Model* m_Model{};
+	D3DXVECTOR3 m_Velocity{};
+	D3DXVECTOR3 m_VelocityTemp{};
 
 	ID3D11VertexShader* m_VertexShader{};
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
 
-	D3DXVECTOR3 m_Velocity{};
+	Model* m_Model{};
+
+	PlayerCollision m_PlayerCollision = NONE;
 
 	float m_Speed;
 	float m_GroundHeight;
@@ -29,8 +32,6 @@ private:
 	bool m_IsEnable;
 
 	class Shadow* m_Shadow{};
-
-	PlayerCollision m_PlayerCollision = NONE;
 
 public:
 	void Init();
@@ -41,5 +42,5 @@ public:
 	void CollisionUpdate();
 	void SetEnable(bool flg) { m_IsEnable = flg; }
 	PlayerCollision GetPlayerCollision() { return m_PlayerCollision; }
-	void SetPlayerCollision(PlayerCollision pc) { m_PlayerCollision = pc; }
+	void SetPlayerCollision(PlayerCollision collision) { m_PlayerCollision = collision; }
 };
