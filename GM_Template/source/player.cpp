@@ -209,7 +209,7 @@ void Player::Update()
 	// Õ“Ë”»’è
 	CollisionUpdate();
 
-#ifndef Debag
+#ifndef Debug
 	// ƒWƒƒƒ“ƒv
 	if (m_Position.y <= m_GroundHeight && m_Velocity.y <= 0.0f)
 	{
