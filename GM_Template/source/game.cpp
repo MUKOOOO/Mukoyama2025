@@ -102,7 +102,7 @@ void Game::Init()
 
 	player = AddGameObject<Player>(1);
 
-	AddGameObject<WarpBlock>(1);
+	m_WarpBlock = AddGameObject<WarpBlock>(1);
 
 	// UI
 	CoinCount* coinCount = AddGameObject<CoinCount>(2);
@@ -140,11 +140,9 @@ void Game::Update()
 	case WARP_BLOCK:
 		m_BreakMap->AddBreakMap(1);
 		MapCreate();
-		player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.0f));
 		break;
 	case ENEMY:
 		GameOver();
-		Manager::SetScene<Title>();
 		break;
 	default:
 		break;
@@ -275,7 +273,7 @@ void Game::GameClear()
 
 void Game::GameOver()
 {
-
+	Manager::SetScene<Title>();
 }
 
 // マップを生成
@@ -289,7 +287,7 @@ void Game::MapCreate()
 		// ブロック(ランダム)
 		CreateRandomBlock();
 
-		// エネミー
+		// エネミー パックンフラワーのような敵
 		/*if (m_Enemy[0] != NULL)
 		{
 			for (int i = 0; i < MAX_ENEMY; i++)
@@ -307,34 +305,66 @@ void Game::MapCreate()
 		// コイン
 		CreateCoin();
 		
+		m_WarpBlock->SetPosition(D3DXVECTOR3(0.5f, 0.1f, 12.5f));
+		player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.5f));
 	}
-	else if (m_BreakMap->GetBreakMap() == 5)
+	else if (m_BreakMap->GetBreakMap() == 5) //レストフロア
 	{
+		// ブロック(固定)の削除
 		for (int i = 0; i < DEFAULT_BLOCK; i++)
 		{
 			m_DefaultBlock[i]->SetDestroy();
+			m_DefaultBlock[i] = NULL;
 		}
 
+		// ブロック(ランダム)の削除
 		for (int i = 0; i < RANDOM_BLOCK; i++)
 		{
 			m_RandomBlock[i]->SetDestroy();
+			m_RandomBlock[i] = NULL;
 		}
-	}
-	else if (m_BreakMap->GetBreakMap() < 9)
-	{
 
-	}
-	else if (m_BreakMap->GetBreakMap() < 14)
-	{
+		// コインの削除
+		for (int i = 0; i < MAX_COIN; i++)
+		{
+			if (m_Coin[i] != NULL)m_Coin[i]->SetDestroy();
+			m_Coin[i] = NULL;
+		}
 
+		m_WarpBlock->SetPosition(D3DXVECTOR3(6.5f, 0.1f, 11.5f));
+		player->SetPosition(D3DXVECTOR3(6.5f, 0.0f, 1.5f));
 	}
-	else if (m_BreakMap->GetBreakMap() < 19)
+	else if (m_BreakMap->GetBreakMap() < 10)
 	{
+		// ブロック(固定)
+		CreateFixedBlock();
 
+		// ブロック(ランダム)
+		CreateRandomBlock();
+
+		// エネミー カメックみたいな敵
+		
+		// コイン
+		CreateCoin();
+
+		m_WarpBlock->SetPosition(D3DXVECTOR3(0.5f, 0.1f, 12.5f));
+		player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.5f));
 	}
-	else if (m_BreakMap->GetBreakMap() < 24)
+	else if (m_BreakMap->GetBreakMap() < 15)
 	{
-
+		// エネミー ファイアパックンみたいな敵
+	}
+	else if (m_BreakMap->GetBreakMap() == 15) //レストフロア
+	{
+		// エネミー キラー砲台みたいな敵
+	}
+	else if (m_BreakMap->GetBreakMap() < 20)
+	{
+		// エネミー テレサみたいな敵
+	}
+	else if (m_BreakMap->GetBreakMap() < 25)
+	{
+		// エネミー 今までに登場した敵を組み合わせる
 	}
 	else if (m_BreakMap->GetBreakMap() == 25)
 	{

@@ -24,7 +24,8 @@ private:
 	class Coin* m_Coin[MAX_COIN]{};
 	class Enemy* m_Enemy[MAX_ENEMY]{};
 	class Player* player{};
-	
+	class WarpBlock* m_WarpBlock{};
+
 	int m_ArchiveNumber[BLOCK_POSITION] = {-1};
 
 public:
