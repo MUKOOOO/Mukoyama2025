@@ -147,6 +147,12 @@ void Game::Update()
 	default:
 		break;
 	}
+
+	if (Input::GetKeyTrigger('M'))
+	{
+		m_BreakMap->AddBreakMap(1);
+		MapCreate();
+	}
 }
 
 // コインの生成
@@ -305,7 +311,7 @@ void Game::MapCreate()
 		// コイン
 		CreateCoin();
 		
-		m_WarpBlock->SetPosition(D3DXVECTOR3(0.5f, 0.1f, 12.5f));
+		m_WarpBlock->SetPosition(D3DXVECTOR3(0.5f, 0.5f, 12.5f));
 		player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.5f));
 	}
 	else if (m_BreakMap->GetBreakMap() == 5) //レストフロア
@@ -331,7 +337,7 @@ void Game::MapCreate()
 			m_Coin[i] = NULL;
 		}
 
-		m_WarpBlock->SetPosition(D3DXVECTOR3(6.5f, 0.1f, 11.5f));
+		m_WarpBlock->SetPosition(D3DXVECTOR3(6.5f, 0.5f, 11.5f));
 		player->SetPosition(D3DXVECTOR3(6.5f, 0.0f, 1.5f));
 	}
 	else if (m_BreakMap->GetBreakMap() < 10)
@@ -347,27 +353,107 @@ void Game::MapCreate()
 		// コイン
 		CreateCoin();
 
-		m_WarpBlock->SetPosition(D3DXVECTOR3(0.5f, 0.1f, 12.5f));
+		m_WarpBlock->SetPosition(D3DXVECTOR3(0.5f, 0.5f, 12.5f));
 		player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.5f));
 	}
 	else if (m_BreakMap->GetBreakMap() < 15)
 	{
+		// ブロック(固定)
+		CreateFixedBlock();
+
+		// ブロック(ランダム)
+		CreateRandomBlock();
+
 		// エネミー ファイアパックンみたいな敵
+
+		// コイン
+		CreateCoin();
+
+		m_WarpBlock->SetPosition(D3DXVECTOR3(0.5f, 0.5f, 12.5f));
+		player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.5f));
 	}
 	else if (m_BreakMap->GetBreakMap() == 15) //レストフロア
 	{
-		// エネミー キラー砲台みたいな敵
+		// ブロック(固定)の削除
+		for (int i = 0; i < DEFAULT_BLOCK; i++)
+		{
+			m_DefaultBlock[i]->SetDestroy();
+			m_DefaultBlock[i] = NULL;
+		}
+
+		// ブロック(ランダム)の削除
+		for (int i = 0; i < RANDOM_BLOCK; i++)
+		{
+			m_RandomBlock[i]->SetDestroy();
+			m_RandomBlock[i] = NULL;
+		}
+
+		// コインの削除
+		for (int i = 0; i < MAX_COIN; i++)
+		{
+			if (m_Coin[i] != NULL)m_Coin[i]->SetDestroy();
+			m_Coin[i] = NULL;
+		}
+
+		m_WarpBlock->SetPosition(D3DXVECTOR3(6.5f, 0.5f, 11.5f));
+		player->SetPosition(D3DXVECTOR3(6.5f, 0.0f, 1.5f));
 	}
 	else if (m_BreakMap->GetBreakMap() < 20)
 	{
+		// ブロック(固定)
+		CreateFixedBlock();
+
+		// ブロック(ランダム)
+		CreateRandomBlock();
+
 		// エネミー テレサみたいな敵
+
+		// コイン
+		CreateCoin();
+
+		m_WarpBlock->SetPosition(D3DXVECTOR3(0.5f, 0.5f, 12.5f));
+		player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.5f));
 	}
 	else if (m_BreakMap->GetBreakMap() < 25)
 	{
+		// ブロック(固定)
+		CreateFixedBlock();
+
+		// ブロック(ランダム)
+		CreateRandomBlock();
+
 		// エネミー 今までに登場した敵を組み合わせる
+
+		// コイン
+		CreateCoin();
+
+		m_WarpBlock->SetPosition(D3DXVECTOR3(0.5f, 0.5f, 12.5f));
+		player->SetPosition(D3DXVECTOR3(13.0f, 0.0f, 0.5f));
 	}
 	else if (m_BreakMap->GetBreakMap() == 25)
 	{
+		// ブロック(固定)の削除
+		for (int i = 0; i < DEFAULT_BLOCK; i++)
+		{
+			m_DefaultBlock[i]->SetDestroy();
+			m_DefaultBlock[i] = NULL;
+		}
 
+		// ブロック(ランダム)の削除
+		for (int i = 0; i < RANDOM_BLOCK; i++)
+		{
+			m_RandomBlock[i]->SetDestroy();
+			m_RandomBlock[i] = NULL;
+		}
+
+		// コインの削除
+		for (int i = 0; i < MAX_COIN; i++)
+		{
+			if (m_Coin[i] != NULL)m_Coin[i]->SetDestroy();
+			m_Coin[i] = NULL;
+		}
+
+		m_WarpBlock->SetPosition(D3DXVECTOR3(6.5f, 0.5f, 11.5f));
+		player->SetPosition(D3DXVECTOR3(6.5f, 0.0f, 1.5f));
 	}
 }

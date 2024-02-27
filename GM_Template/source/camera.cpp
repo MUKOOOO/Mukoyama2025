@@ -11,7 +11,7 @@
 #define Z_MAX 4.0f
 #define Z_MIN -4.0f
 
-#define FOLLOW D3DXVECTOR3(0.0f,10.0f,-2.0f)
+#define FOLLOW D3DXVECTOR3(0.0f,12.0f,-2.0f)
 #define LOOKINGDOWN D3DXVECTOR3(0.0f,1.0f,-4.0f)
 
 #define DEBAG_CAMERA_SPEED 0.25f
@@ -154,12 +154,12 @@ void Camera::StageScene()
 		m_Target = player->GetPosition();
 		m_Position = m_Target + m_Angle;
 
-		if (Input::GetKeyPress(VK_UP))
+		if (Input::GetKeyPress(VK_UP) && m_Angle.y <= 11.9f)
 		{
 			m_Angle.y += 0.1f;
 			m_Angle.z += 0.1f;
 		}
-		if (Input::GetKeyPress(VK_DOWN))
+		if (Input::GetKeyPress(VK_DOWN) && m_Angle.y >= 1.0f)
 		{
 			m_Angle.y -= 0.1f;
 			m_Angle.z -= 0.1f;

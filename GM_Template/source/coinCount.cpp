@@ -5,7 +5,7 @@
 
 void CoinCount::Init()
 {
-	m_pos.x = 8.0f;
+	m_pos.x = 32.0f;
 	m_pos.y = 8.0f;
 
 	VERTEX_3D vertex[4];

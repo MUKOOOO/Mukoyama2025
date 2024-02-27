@@ -11,7 +11,7 @@ Model* Block::m_Model{};
 void Block::Load()
 {
 	m_Model = new Model();
-	m_Model->Load("asset\\gift\\block01.obj");
+	m_Model->Load("asset\\model\\block07.obj");
 }
 
 void Block::Unload()
