@@ -28,6 +28,7 @@ public:
 	void Load(const char *FileName);
 	void Play(float Volume,bool Loop = false);
 	void SetVolume(float Volume);
+	void Stop();
 	float GetVolume()const;
 };
 

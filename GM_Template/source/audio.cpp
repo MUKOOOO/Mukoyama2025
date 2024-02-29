@@ -152,6 +152,12 @@ void Audio::Play(float Volume,bool Loop)
 
 }
 
+void Audio::Stop()
+{
+	m_SourceVoice->Stop();
+	m_SourceVoice->FlushSourceBuffers();
+}
+
 void Audio::SetVolume(float Volume)
 {
 	m_SourceVoice->SetVolume(Volume);

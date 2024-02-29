@@ -221,6 +221,7 @@
   <ItemGroup>
     <ClInclude Include="source\audio.h" />
     <ClInclude Include="source\camera.h" />
+    <ClInclude Include="source\chase.h" />
     <ClInclude Include="source\coin.h" />
     <ClInclude Include="source\coinCount.h" />
     <ClInclude Include="source\component.h" />
@@ -261,6 +262,7 @@
   <ItemGroup>
     <ClCompile Include="source\audio.cpp" />
     <ClCompile Include="source\camera.cpp" />
+    <ClCompile Include="source\chase.cpp" />
     <ClCompile Include="source\coin.cpp" />
     <ClCompile Include="source\coinCount.cpp" />
     <ClCompile Include="source\enemy.cpp" />

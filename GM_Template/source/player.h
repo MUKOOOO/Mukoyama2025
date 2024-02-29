@@ -14,6 +14,9 @@
 class Player : public GameObject
 {
 private:
+	class Audio* m_CoinSE{};
+	class Audio* m_FootSE{};
+
 	D3DXVECTOR3 m_Velocity{};
 	D3DXVECTOR3 m_VelocityTemp{};
 

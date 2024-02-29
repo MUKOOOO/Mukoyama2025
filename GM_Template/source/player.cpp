@@ -4,6 +4,7 @@
 #include "input.h"
 #include "scene.h"
 #include "player.h"
+#include "audio.h"
 #include "block.h"
 #include "coin.h"
 #include "enemy.h"
@@ -38,6 +39,12 @@ void Player::Init()
 
 	Renderer::CreatePixelShader(&m_PixelShader,
 		"shader\\vertexLightingPS.cso");
+
+	m_CoinSE = AddComponent<Audio>();
+	m_CoinSE->Load("asset\\sound\\nc248639.wav");
+
+	m_FootSE = AddComponent<Audio>();
+	m_FootSE->Load("asset\\sound\\walk.wav");
 
 	m_Speed = 0.01f;
 	m_GroundHeight = 0.0f;
@@ -141,6 +148,15 @@ void Player::Update()
 			D3DXVECTOR3 offset = D3DXVECTOR3(-m_Scale.x/2, 0.25f, 0.0f);
 			scene->AddGameObject<FootSmoke>(1)->SetPosition(m_Position + offset);
 		}
+	}
+
+	if (Input::GetKeyTrigger('W') || Input::GetKeyTrigger('A') || Input::GetKeyTrigger('S') || Input::GetKeyTrigger('D'))
+	{
+		m_FootSE->Play(0.025, true);
+	}
+	else if(!Input::GetKeyPress('W')&& !Input::GetKeyPress('A') && !Input::GetKeyPress('S') && !Input::GetKeyPress('D'))
+	{
+		m_FootSE->Stop();
 	}
 
 	// コントローラー操作
@@ -336,6 +352,7 @@ void Player::CollisionUpdate()
 		{
 			if (m_Position.y < position.y + scale.y/2)
 			{
+				m_CoinSE->Play(0.05f, false);
 				coin->SetDestroy();
 				CoinCount* coins = scene->GetGameObject<CoinCount>();
 				coins->AddCoin(1);

@@ -7,6 +7,7 @@
 
 #include "block.h"
 #include "camera.h"
+#include "chase.h"
 #include "coin.h"
 #include "enemy.h"
 #include "field.h"
@@ -36,6 +37,7 @@ void Game::Init()
 
 	// モデル読み込み
 	Coin().Load();
+	Chase().Load();
 	Enemy().Load();
 	Block().Load();
 	WarpBlock().Load();
@@ -84,6 +86,8 @@ void Game::Init()
 	// オブジェクトの登録
 	AddGameObject<Camera>(0)->ChangeCameraType(Follow);
 
+	AddGameObject<Chase>(1);
+
 	AddGameObject<Field>(1)->SetPosition(D3DXVECTOR3(6.5f,0.0f,6.5f));
 
 	AddGameObject<Wall>(1)->SetPosition(D3DXVECTOR3(6.5f, 2.0f, 13.5f));
@@ -110,8 +114,8 @@ void Game::Init()
 	Wipe* wipe = AddGameObject<Wipe>(2);
 
 	m_BGM = AddGameObject<GameObject>(0)->AddComponent<Audio>();
-	m_BGM->Load("asset\\sound\\Suno.wav");
-	//m_BGM->Play(0.05f, true);
+	m_BGM->Load("asset\\sound\\nc27836.wav");
+	m_BGM->Play(0.05f, true);
 
 	// マップを生成
 	MapCreate();
@@ -126,6 +130,7 @@ void Game::Uninit()
 	WarpBlock().Unload();
 	Block().Unload();
 	Enemy().Unload();
+	Chase().Unload();
 	Coin().Unload();
 }
 
@@ -294,7 +299,7 @@ void Game::MapCreate()
 		CreateRandomBlock();
 
 		// エネミー パックンフラワーのような敵
-		/*if (m_Enemy[0] != NULL)
+		if (m_Enemy[0] != NULL)
 		{
 			for (int i = 0; i < MAX_ENEMY; i++)
 			{
@@ -305,8 +310,8 @@ void Game::MapCreate()
 		for (int i = 0; i < m_BreakMap->GetBreakMap() + 1; i++)
 		{
 			m_Enemy[i] = AddGameObject<Enemy>(1);
-			m_Enemy[i]->SetPosition(D3DXVECTOR3(Random(0, 14), 0.0f, Random(0, 14)));
-		}*/
+			m_Enemy[i]->SetPosition(D3DXVECTOR3(Random(0, 13), 0.0f, Random(0, 13)));
+		}
 		
 		// コイン
 		CreateCoin();

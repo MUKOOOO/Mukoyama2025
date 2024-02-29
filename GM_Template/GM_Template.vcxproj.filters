@@ -167,6 +167,9 @@
     <ClInclude Include="source\audio.h">
       <Filter>component</Filter>
     </ClInclude>
+    <ClInclude Include="source\chase.h">
+      <Filter>object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -267,6 +270,9 @@
     </ClCompile>
     <ClCompile Include="source\audio.cpp">
       <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="source\chase.cpp">
+      <Filter>object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
