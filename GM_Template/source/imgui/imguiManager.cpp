@@ -8,6 +8,7 @@
 #include "../scene.h"
 #include "../player.h"
 #include "../title.h"
+#include "../camera.h"
 
 char ImguiManager::m_Buffer[1024];
 bool ImguiManager::flg;
@@ -83,6 +84,7 @@ void ImguiManager::StageScene()
 {
     Scene* scene = Manager::GetScene();
     Player* player = scene->GetGameObject<Player>();
+    Camera* camera = scene->GetGameObject<Camera>();
 
     //static float f;
 

@@ -35,7 +35,7 @@ void Title::Init()
     // オブジェクトの配置
 	camera = AddGameObject<Camera>(0);
 	camera->SetPosition(D3DXVECTOR3(12.0f, 5.05f, -6.0f));
-	camera->SetTarget(D3DXVECTOR3(12.0f, 5.0f, 0.0f));
+	//camera->SetTarget(D3DXVECTOR3(12.0f, 5.0f, 0.0f));
 
 	AddGameObject<Sky>(1);
 

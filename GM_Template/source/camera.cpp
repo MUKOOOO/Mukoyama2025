@@ -5,42 +5,56 @@
 #include"camera.h"
 #include"player.h"
 #include"scene.h"
-
-#define X_MAX 4.0f
-#define X_MIN -4.0f
-#define Z_MAX 4.0f
-#define Z_MIN -4.0f
-
-#define FOLLOW D3DXVECTOR3(0.0f,12.0f,-2.0f)
-#define LOOKINGDOWN D3DXVECTOR3(0.0f,1.0f,-4.0f)
-
-#define DEBAG_CAMERA_SPEED 0.25f
+#include<math.h>
 
 void Camera::Init()
 {
-	m_Position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	m_Target = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	m_CameraType = Normal;
-
-	m_SetUp = false;
+	m_Distance = 4.0f;
+	m_Height = 45.0f;
+	m_Rot = 45.0f;
 }
 
 void Camera::Update()
 {	
-	Scene* scene = Manager::GetScene();
+	//スタート時のズーム演出
+	if (m_Distance < 8.0f)m_Distance += 0.1f;
 
-	switch (scene->GetSceneName())
+	Scene* scene = Manager::GetScene();
+	Player* player = scene->GetGameObject<Player>();
+
+	//カメラの操作(キーボード)
+	if (Input::GetKeyPress(VK_LEFT))
 	{
-	case SCENE_NAME::TITLE:
-		TitleScene();
-		break;
-	case SCENE_NAME::STAGE:
-		StageScene();
-		break;
+		m_Rot -= 1.0f;
 	}
+	if (Input::GetKeyPress(VK_RIGHT))
+	{
+		m_Rot += 1.0f;
+	}
+	if (Input::GetKeyPress(VK_UP))
+	{
+		if (m_Height < 89.0f)m_Height += 1.0f;
+	}
+	if (Input::GetKeyPress(VK_DOWN))
+	{
+		if (m_Height > 0.0f)m_Height -= 1.0f;
+	}
+
+	//カメラリセット(キーボード)
+	if (Input::GetKeyPress('P'))
+	{
+
+	}
+
+	//カメラの操作(コントローラー)
+
+
+	m_Angle.x = sin(m_Rot * (D3DX_PI * 2) / 360) * cos(m_Height * (D3DX_PI * 2) / 360);
+	m_Angle.z = -cos(m_Rot * (D3DX_PI * 2) / 360) * cos(m_Height * (D3DX_PI * 2) / 360);
+	m_Angle.y = sin(m_Height * (D3DX_PI * 2) / 360);
+
+	m_Target = player->GetPosition() + D3DXVECTOR3(0.0f, 2.0f, 0.0f);
+	m_Position = m_Target + D3DXVECTOR3(m_Angle.x * m_Distance, m_Angle.y * m_Distance, m_Angle.z * m_Distance);
 }
 
 void Camera::Draw()
@@ -58,117 +72,6 @@ void Camera::Draw()
 	Renderer::SetProjectionMatrix(&projectionMatrix);
 }
 
-void Camera::TitleScene()
-{
-
-#ifndef Debag
-	if (Input::GetKeyPress('W'))
-	{
-		m_Target.z += DEBAG_CAMERA_SPEED;
-	}
-	if (Input::GetKeyPress('A'))
-	{
-		m_Target.x -= DEBAG_CAMERA_SPEED;
-		m_Position.x -= DEBAG_CAMERA_SPEED;
-	}
-	if (Input::GetKeyPress('S'))
-	{
-		m_Target.z -= DEBAG_CAMERA_SPEED;
-	}
-	if (Input::GetKeyPress('D'))
-	{
-		m_Target.x += DEBAG_CAMERA_SPEED;
-		m_Position.x += DEBAG_CAMERA_SPEED;
-	}
-
-	if (Input::GetKeyPress(VK_UP))
-	{
-		m_Target.y += DEBAG_CAMERA_SPEED;
-		m_Position.y += DEBAG_CAMERA_SPEED;
-	}
-	if (Input::GetKeyPress(VK_DOWN))
-	{
-		m_Target.y -= DEBAG_CAMERA_SPEED;
-		m_Position.y -= DEBAG_CAMERA_SPEED;
-	}
-
-	// マウスをドラッグして角度を変更する
-	POINT point;
-	GetCursorPos(&point);
-	ScreenToClient(GetActiveWindow(), &point);
-
-	if (Input::GetKeyPress(VK_LBUTTON))
-	{
-		int moveX = point.x - m_OldMouseX;
-		int moveY = point.y - m_OldMouseY;
-
-		m_Target.y -= moveY*0.001f;
-		m_Target.x += moveX*0.001f;
-	}
-
-	m_Position.z = m_Target.z -0.1f;
-
-	m_OldMouseX = point.x;
-	m_OldMouseY = point.y;
-#endif // !Debag
-
-}
-
-void Camera::StageScene()
-{
-	Scene* scene = Manager::GetScene();
-	Player* player = scene->GetGameObject<Player>();
-
-	switch (m_CameraType)
-	{
-	case Normal://原点
-
-		break;
-	case LookingDown://俯瞰
-		if (m_SetUp == false)
-		{
-			m_SetUp = true;
-			m_Angle = LOOKINGDOWN;
-		}
-
-		m_Position = m_Target + m_Angle;
-
-		if (Input::GetKeyPress(VK_UP))
-		{
-			m_Angle.y += 0.1f;
-			m_Angle.z += 0.1f;
-		}
-		if (Input::GetKeyPress(VK_DOWN))
-		{
-			m_Angle.y -= 0.1f;
-			m_Angle.z -= 0.1f;
-		}
-		break;
-	case Follow://追従
-		if (m_SetUp == false)
-		{
-			m_SetUp = true;
-			m_Angle = FOLLOW;
-		}
-
-		m_Target = player->GetPosition();
-		m_Position = m_Target + m_Angle;
-
-		if (Input::GetKeyPress(VK_UP) && m_Angle.y <= 11.9f)
-		{
-			m_Angle.y += 0.1f;
-			m_Angle.z += 0.1f;
-		}
-		if (Input::GetKeyPress(VK_DOWN) && m_Angle.y >= 1.0f)
-		{
-			m_Angle.y -= 0.1f;
-			m_Angle.z -= 0.1f;
-		}
-		break;
-	}
-}
-
-// カリング処理
 bool Camera::CheckView(D3DXVECTOR3 Position, D3DXVECTOR3 Scale)
 {
 	D3DXMATRIX vp, invvp;

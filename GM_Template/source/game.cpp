@@ -84,7 +84,7 @@ void Game::Init()
 	}
 	
 	// オブジェクトの登録
-	AddGameObject<Camera>(0)->ChangeCameraType(Follow);
+	AddGameObject<Camera>(0);
 
 	AddGameObject<Chase>(1);
 
