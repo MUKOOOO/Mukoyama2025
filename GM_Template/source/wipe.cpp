@@ -14,6 +14,9 @@ void Wipe::Init()
 
 	m_Sprite = AddComponent<Sprite>();
 	m_Sprite->Init(0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, "asset\\texture\\009.jpg");
+	m_Sprite->SetColor(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
+
+	m_WipeState = WIPW_STATE::OPEN;
 }
 
 void Wipe::Uninit()
@@ -29,7 +32,27 @@ void Wipe::Update()
 {
 	GameObject::Update();
 
-	m_Threshold += 0.011f;
+	switch (m_WipeState)
+	{
+	case WIPW_STATE::NONE:
+		break;
+	case WIPW_STATE::OPEN:
+		if (m_Threshold >= 1.0f)
+		{
+			m_WipeState == WIPW_STATE::NONE;
+		}
+		m_Threshold += 0.01f;
+		break;
+	case WIPW_STATE::CLOSE:
+		if (m_Threshold <= 0.0f)
+		{
+			m_WipeState == WIPW_STATE::NONE;
+		}
+		m_Threshold -= 0.01f;
+		break;
+	default:
+		break;
+	}
 }
 
 void Wipe::Draw()

@@ -86,7 +86,7 @@ void Game::Init()
 	// オブジェクトの登録
 	AddGameObject<Camera>(0);
 
-	AddGameObject<Chase>(1);
+	//AddGameObject<Chase>(1);
 
 	AddGameObject<Field>(1)->SetPosition(D3DXVECTOR3(6.5f,0.0f,6.5f));
 
@@ -111,15 +111,19 @@ void Game::Init()
 	// UI
 	CoinCount* coinCount = AddGameObject<CoinCount>(2);
 	m_BreakMap = AddGameObject<BreakMap>(2);
-	Wipe* wipe = AddGameObject<Wipe>(2);
+	m_Wipe = AddGameObject<Wipe>(2);
 
 	m_BGM = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_BGM->Load("asset\\sound\\nc27836.wav");
 	m_BGM->Play(0.05f, true);
 
+	m_GameOver = AddGameObject<GameObject>(0)->AddComponent<Audio>();
+	m_GameOver->Load("asset\\sound\\nc310890.wav");
+
 	// マップを生成
 	MapCreate();
-	
+
+	m_IsGameOver = false;
 }
 
 // 終了処理
@@ -284,7 +288,14 @@ void Game::GameClear()
 
 void Game::GameOver()
 {
-	Manager::SetScene<Title>();
+	if (m_IsGameOver == false)
+	{
+		m_IsGameOver = true;
+		m_BGM->Stop();
+		m_GameOver->Play(0.05f, false);
+		m_Wipe->ChangeState(WIPW_STATE::CLOSE);
+	}
+	//Manager::SetScene<Game>();
 }
 
 // マップを生成

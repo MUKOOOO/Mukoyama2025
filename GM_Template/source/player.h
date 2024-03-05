@@ -1,7 +1,8 @@
 #pragma once
 
-#include "model.h"
+#include"model.h"
 #include"gameObject.h"
+#include<XInput.h>
 
  enum PlayerCollision
 {
@@ -28,6 +29,9 @@ private:
 
 	PlayerCollision m_PlayerCollision = NONE;
 
+	XINPUT_STATE m_state;
+	XINPUT_KEYSTROKE m_key;
+
 	float m_Speed;
 	float m_GroundHeight;
 	float m_GroundHeightTemp;
@@ -41,6 +45,8 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
+
+	void Move();
 
 	void CollisionUpdate();
 	void SetEnable(bool flg) { m_IsEnable = flg; }

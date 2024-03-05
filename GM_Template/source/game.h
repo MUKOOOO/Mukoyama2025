@@ -18,15 +18,18 @@ private:
 	D3DXVECTOR3 m_BlockPosition[BLOCK_POSITION]{};
 
 	class Audio* m_BGM{};
+	class Audio* m_GameOver{};
 	class Block* m_DefaultBlock[DEFAULT_BLOCK]{};
 	class Block* m_RandomBlock[RANDOM_BLOCK]{};
 	class BreakMap* m_BreakMap{};
 	class Coin* m_Coin[MAX_COIN]{};
 	class Enemy* m_Enemy[MAX_ENEMY]{};
 	class Player* player{};
+	class Wipe* m_Wipe{};
 	class WarpBlock* m_WarpBlock{};
 
 	int m_ArchiveNumber[BLOCK_POSITION] = {-1};
+	bool m_IsGameOver;
 
 public:
 	void Init();

@@ -14,8 +14,6 @@
 #include "footSmoke.h"
 #include "shadow.h"
 
-#include <XInput.h>
-
 
 #define XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE  7849
 #define XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE 8689
@@ -160,60 +158,52 @@ void Player::Update()
 	}
 
 	// コントローラー操作
-	XINPUT_STATE state;
-	XINPUT_KEYSTROKE key;
-	XInputGetState(0, &state);
-	XInputGetKeystroke(0, XINPUT_FLAG_GAMEPAD, &key);
-
-	if (XInputGetState(0, &state) == ERROR_SUCCESS)
+	if (XInputGetState(0, &m_state) == ERROR_SUCCESS)
 	{
-		// 闘値設定
-		if ((state.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-			state.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
-			(state.Gamepad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-				state.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+		if (XInputGetKeystroke(0, XINPUT_FLAG_GAMEPAD, &m_key) == ERROR_SUCCESS)
 		{
-			state.Gamepad.sThumbLX = 0;
-			state.Gamepad.sThumbLY = 0;
+
+		}
+
+		// 闘値設定
+		if ((m_state.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+			m_state.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
+			(m_state.Gamepad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+				m_state.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+		{
+			m_state.Gamepad.sThumbLX = 0;
+			m_state.Gamepad.sThumbLY = 0;
 		}
 
 		// 斜め移動を遅くする
-		if (state.Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE ||
-			state.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+		m_Speed = 0.1f;
+		if (m_state.Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE ||
+			m_state.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 		{
-			if (state.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE ||
-				state.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+			if (m_state.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE ||
+				m_state.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			{
 				m_Speed = 0.07f;
 			}
-			else
-			{
-				m_Speed = 0.1f;
-			}
-		}
-		else if (state.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE ||
-			state.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
-		{
-			m_Speed = 0.1f;
 		}
 
 		//スティックを前に傾けたら前に移動
-		if (state.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+		if (m_state.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 		{
 			m_Velocity.z = m_Speed;
 		}
 		//スティックを後に傾けたら後に移動
-		if (state.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+		if (m_state.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 		{
 			m_Velocity.z = -m_Speed;
 		}
 		// スティックを左に傾けたら左に移動
-		if (state.Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+		if (m_state.Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 		{
 			m_Velocity.x = -m_Speed;
 		}
 		// スティックを右に傾けたら右に移動
-		if (state.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+		if (m_state.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 		{
 			m_Velocity.x = m_Speed;
 		}
@@ -237,7 +227,7 @@ void Player::Update()
 			m_Velocity.y = 0.25f;
 		}
 
-		if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN && key.VirtualKey == VK_PAD_A)
+		if (m_key.Flags == XINPUT_KEYSTROKE_KEYDOWN && m_key.VirtualKey == VK_PAD_A)
 		{
 			m_Velocity.y = 0.25f;
 		}
@@ -408,4 +398,9 @@ void Player::CollisionUpdate()
 	if (m_Position.x > 13.0f)m_Position.x = m_OldPosition.x;
 	if (m_Position.z < 0.0f)m_Position.z = m_OldPosition.z;
 	if (m_Position.z > 13.0f)m_Position.z = m_OldPosition.z;
+}
+
+void Player::Move()
+{
+	
 }
