@@ -123,6 +123,9 @@
     <ClCompile Include="source\renderer.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="source\object.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\audio.h">
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="source\scene.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\object.h">
+      <Filter>component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,38 +1,22 @@
 #pragma once
 #include "scene.h"
 
-#define fieldSizeX 50
-#define fieldSizeZ 50
-
+/// <summary>
+/// タイトルシーンを管理する
+/// </summary>
 class Title:public Scene
 {
 private:
-	class Camera* camera{};
-	class Audio* m_BGM1{};
-	class Audio* m_BGM2{};
-	class GrassBlock* grassBlock[fieldSizeX*fieldSizeZ]{};
-	class Wipe* wipe{};
-
-	static float m_bump;
-	static float m_maxHeight;
-	float m_seedX;
-	float m_seedZ;
+	class Audio*		m_Music{};
+	class Camera*	m_Camera{};
+	class Object*	m_Object{};
+	class Wipe*		m_Wipe{};
 
 	bool m_SceneChange;
-	bool m_randomSeed;
-
 public:
 	void Init();
 	void Uninit();
 	void Update();
 
 	void SceneChange();
-
-	void SetBump(float bump) { m_bump = bump; }
-	float GetBump() { return m_bump; }
-
-	void SetMaxHeight(float maxHeight) { m_maxHeight = maxHeight; }
-	float GetMaxHeight() { return m_maxHeight; }
-
-	void ChangeBGM(Audio* audio1);
 };

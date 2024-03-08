@@ -231,6 +231,7 @@
     <ClInclude Include="source\game.h" />
     <ClInclude Include="source\gameObject.h" />
     <ClInclude Include="source\grassBlock.h" />
+    <ClInclude Include="source\object.h" />
     <ClInclude Include="source\wall.h" />
     <ClInclude Include="source\warpBlock.h" />
     <ClInclude Include="source\footSmoke.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="source\field.cpp" />
     <ClCompile Include="source\game.cpp" />
     <ClCompile Include="source\grassBlock.cpp" />
+    <ClCompile Include="source\object.cpp" />
     <ClCompile Include="source\wall.cpp" />
     <ClCompile Include="source\warpBlock.cpp" />
     <ClCompile Include="source\footSmoke.cpp" />

@@ -4,9 +4,8 @@
 #include<vector>
 #include<typeinfo>
 
-enum struct SCENE_NAME
+enum struct SCENE_STATE
 {
-	NONE,
 	TITLE,
 	STAGE
 };
@@ -16,7 +15,7 @@ class Scene
 protected:
 	//GameObject* m_GameObject[4]{};
 	std::list<GameObject*> m_GameObject[3];
-	SCENE_NAME e_sceneName = SCENE_NAME::NONE;
+	SCENE_STATE m_sceneState = SCENE_STATE::TITLE;
 	int a;
 public:
 	virtual void Init()
@@ -110,5 +109,5 @@ public:
 	void SetA(int s) { a = s; }
 	int GetA(void) { return a; }
 
-	SCENE_NAME GetSceneName() { return e_sceneName; }
+	SCENE_STATE GetSceneName() { return m_sceneState; }
 };

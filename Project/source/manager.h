@@ -8,9 +8,7 @@ private:
 	static Scene* m_Scene;
 	static Scene* m_NextScene;
 	static int m_SScore;
-
 public:
-	
 	static void Init();
 	static void Uninit();
 	static void Update();

@@ -13,11 +13,48 @@ void Camera::Init()
 	m_Height = 45.0f;
 	m_Rot = 45.0f;
 
+	m_CameraState = CAMERA_STATE::Default;
+
 	m_CameraAnime = true;
 }
 
 void Camera::Update()
 {	
+	// カメラの状態に応じた処理を実行
+	switch (m_CameraState)
+	{
+	case CAMERA_STATE::Default:
+		DefaultCamera();
+		break;
+	case CAMERA_STATE::Stage:
+		StageCamera();
+		break;
+	}
+}
+
+void Camera::Draw()
+{
+	// ビューマトリクス設定
+	D3DXVECTOR3 up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	D3DXMatrixLookAtLH(&m_ViewMatrix, &m_Position, &m_Target, &up);
+
+	Renderer::SetViewMatrix(&m_ViewMatrix);
+
+	D3DXMATRIX projectionMatrix;
+	D3DXMatrixPerspectiveFovLH(&projectionMatrix, 1.0f, 
+		(float)SCREEN_WIDTH / SCREEN_HEIGHT, 1.0f, 1000.0f);
+
+	Renderer::SetProjectionMatrix(&projectionMatrix);
+}
+
+void Camera::DefaultCamera()
+{
+	m_Target = D3DXVECTOR3(0.0f, 2.0f, 0.0f);
+	m_Position = m_Target + D3DXVECTOR3(0.0f, 0.0f, -2.0f);
+}
+
+void Camera::StageCamera()
+{
 	//スタート時のズーム演出
 	if (m_CameraAnime == true)
 	{
@@ -56,27 +93,13 @@ void Camera::Update()
 	//カメラの操作(コントローラー)
 	//未実装
 
+	// プレイヤーを中心に垂直、水平回転
 	m_Angle.x = sin(m_Rot * (D3DX_PI * 2) / 360) * cos(m_Height * (D3DX_PI * 2) / 360);
 	m_Angle.z = -cos(m_Rot * (D3DX_PI * 2) / 360) * cos(m_Height * (D3DX_PI * 2) / 360);
 	m_Angle.y = sin(m_Height * (D3DX_PI * 2) / 360);
 
 	m_Target = player->GetPosition() + D3DXVECTOR3(0.0f, 2.0f, 0.0f);
 	m_Position = m_Target + D3DXVECTOR3(m_Angle.x * m_Distance, m_Angle.y * m_Distance, m_Angle.z * m_Distance);
-}
-
-void Camera::Draw()
-{
-	// ビューマトリクス設定
-	D3DXVECTOR3 up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	D3DXMatrixLookAtLH(&m_ViewMatrix, &m_Position, &m_Target, &up);
-
-	Renderer::SetViewMatrix(&m_ViewMatrix);
-
-	D3DXMATRIX projectionMatrix;
-	D3DXMatrixPerspectiveFovLH(&projectionMatrix, 1.0f, 
-		(float)SCREEN_WIDTH / SCREEN_HEIGHT, 1.0f, 1000.0f);
-
-	Renderer::SetProjectionMatrix(&projectionMatrix);
 }
 
 bool Camera::CheckView(D3DXVECTOR3 Position, D3DXVECTOR3 Scale)

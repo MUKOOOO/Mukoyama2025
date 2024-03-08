@@ -1,7 +1,7 @@
 #pragma once
 
 /// <summary>
-/// Imguiを管理するためのクラス
+/// Imguiを管理するクラス
 /// </summary>
 class  ImguiManager
 {

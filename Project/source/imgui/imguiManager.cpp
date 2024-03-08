@@ -45,10 +45,10 @@ void ImguiManager::Begin()
 
     switch (scene->GetSceneName())
     {
-    case SCENE_NAME::TITLE:
+    case SCENE_STATE::TITLE:
         TitleScene();
         break;
-    case SCENE_NAME::STAGE:
+    case SCENE_STATE::STAGE:
         StageScene();
         break;
     }
@@ -69,15 +69,7 @@ void ImguiManager::TitleScene()
 
     ImGui_ImplDX11_NewFrame();
     ImGui::NewFrame();
-    ImGui::Begin("Test");
-
-    m_Bump = title->GetBump();
-    ImGui::DragFloat("Bump", &m_Bump, 1.0f, 0.0f, 100.0f, "%3.1f");
-    title->SetBump(m_Bump);
-
-    m_MaxHeight = title->GetMaxHeight();
-    ImGui::DragFloat("MaxHeight", &m_MaxHeight, 1.0f, 0.0f, 100.0f, "%3.1f");
-    title->SetMaxHeight(m_MaxHeight);
+    ImGui::Begin("TitleScene");
 }
 
 void ImguiManager::StageScene()

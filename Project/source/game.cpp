@@ -33,7 +33,8 @@ int Random(int low, int high)
 // 初期化処理
 void Game::Init()
 {
-	e_sceneName = SCENE_NAME::STAGE;
+	// 
+	m_sceneState = SCENE_STATE::STAGE;
 
 	// モデル読み込み
 	Coin().Load();
@@ -84,7 +85,7 @@ void Game::Init()
 	}
 	
 	// オブジェクトの登録
-	AddGameObject<Camera>(0);
+	AddGameObject<Camera>(0)->SetCameraState(CAMERA_STATE::Stage);
 
 	//AddGameObject<Chase>(1);
 
