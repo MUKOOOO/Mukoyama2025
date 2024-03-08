@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{1df5aa8d-f5ea-4ce8-af2c-4cccc428adf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{4be363f8-d448-421d-87dd-02e170d76f7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{5b5a57b5-9473-486d-ac01-6c0b66d180a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object">
+      <UniqueIdentifier>{27cc7cfe-e17f-4c8a-9991-8a3a9efac66d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui/ux/effect">
+      <UniqueIdentifier>{e90bad68-df45-4618-88db-eb1385e79403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="component">
+      <UniqueIdentifier>{8c13b667-9c7a-46f2-85c6-25ff2dde7f9f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shader\common.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\vertexLightingPS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\vertexLightingVS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\unlitTexturePS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\unlitTextureVS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\wipePS.hlsl">
+      <Filter>shader</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\main.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\manager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\renderer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\scene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\component.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\model.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\imgui\imgui_impl_win32.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\imgui\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\imgui\imguiManager.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\imgui\imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\imgui\imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\imgui\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\imgui\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\imgui\imgui_impl_dx11.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\perlinNoise.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\warpBlock.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\breakMap.h">
+      <Filter>ui/ux/effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\coin.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\enemy.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\footSmoke.h">
+      <Filter>ui/ux/effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\wipe.h">
+      <Filter>ui/ux/effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\coinCount.h">
+      <Filter>ui/ux/effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\block.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\field.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\wall.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fade.h">
+      <Filter>ui/ux/effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\camera.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gameObject.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sprite.h">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shadow.h">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="source\grassBlock.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sky.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\player.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\audio.h">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="source\chase.h">
+      <Filter>object</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="source\manager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="source\renderer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="source\model.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="source\imgui\imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\imgui\imguiManager.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\imgui\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\imgui\imgui_impl_dx11.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\imgui\imgui_impl_win32.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\warpBlock.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\breakMap.cpp">
+      <Filter>ui/ux/effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\coin.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\enemy.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\footSmoke.cpp">
+      <Filter>ui/ux/effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\wipe.cpp">
+      <Filter>ui/ux/effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\coinCount.cpp">
+      <Filter>ui/ux/effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\block.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\field.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\wall.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\fade.cpp">
+      <Filter>ui/ux/effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\camera.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\grassBlock.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sprite.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shadow.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sky.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\player.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\audio.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="source\chase.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
