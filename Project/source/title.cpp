@@ -11,10 +11,11 @@
 #include "object.h"
 #include "sky.h"
 #include "wipe.h"
+#include <time.h>
 
 void Title::Init()
 {
-    // シーンをタイトルに変更
+    // 現在のシーンを設定
     m_sceneState = SCENE_STATE::TITLE;
 
     // モデル読み込み
@@ -34,10 +35,15 @@ void Title::Init()
     fade->FadeIn();
 
     m_Wipe = AddGameObject<Wipe>(2);
+    m_Wipe->SetThreshold(1.0f);
 
 	m_Music = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_Music->Load("asset\\sound\\BGM1.wav");
 	m_Music->Play(0.05f, true);
+
+    // メンバ変数の初期化
+    m_SceneChange = false;
+    m_Frame = 0;
 }
 
 void Title::Uninit()
@@ -52,20 +58,24 @@ void Title::Update()
 {
 	Scene::Update();
 
-    if (m_SceneChange == true)return;
+    // シーン遷移
+    if (m_SceneChange == true)
+    {
+        if (m_Frame == 100)//ワイプ処理
+        {
+            m_Wipe->ChangeState(WIPW_STATE::CLOSE);
+        }
+        if (m_Frame == 200)//シーン切り替え
+        {
+            Manager::SetScene<Game>();
+        }
+        m_Frame++;
+        return;
+    }
 
-    // シーンを切り替える処理
     if (Input::GetKeyPress(VK_SPACE))
     {
         m_SceneChange = true;
-        Manager::SetScene<Game>();
-
-        //BGMフェードイン、SE再生、画面フェードイン
-        SceneChange();
+        m_Music->Stop();
     }
-}
-
-void Title::SceneChange()
-{
-    
 }

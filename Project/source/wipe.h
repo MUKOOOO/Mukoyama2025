@@ -31,5 +31,6 @@ public:
 	void Draw();
 
 	void ChangeState(WIPW_STATE ws) { m_WipeState = ws; }
+	void SetThreshold(float threshold) { m_Threshold = threshold; }
 	WIPW_STATE GetWipeState() { return m_WipeState; }
 };

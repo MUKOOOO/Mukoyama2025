@@ -8,6 +8,11 @@
 #define MAX_ENEMY 5
 #define RANDOM_BLOCK 96
 
+struct RANDOM_BLOCK_POINT
+{
+	D3DXVECTOR3 pos[2];
+};
+
 /// <summary>
 /// ゲームマネージャークラス
 /// </summary>
@@ -25,12 +30,13 @@ private:
 	class Coin* m_Coin[MAX_COIN]{};
 	class Enemy* m_Enemy[MAX_ENEMY]{};
 	class Player* player{};
-	class Wipe* m_Wipe{};
 	class WarpBlock* m_WarpBlock{};
+	class Wipe* m_Wipe{};
 
-	int m_ArchiveNumber[BLOCK_POSITION] = {-1};
+	struct RANDOM_BLOCK_POINT m_RandomBlockPoint[40]{};
+
 	bool m_IsGameOver;
-
+	int m_ArchiveNumber[BLOCK_POSITION] = {-1};
 public:
 	void Init();
 	void Uninit();
@@ -42,5 +48,4 @@ public:
 	void GameClear();
 	void GameOver();
 	void MapCreate();
-	
 };

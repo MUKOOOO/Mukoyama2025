@@ -43,6 +43,41 @@ void Game::Init()
 	Block().Load();
 	WarpBlock().Load();
 
+	// ブロックが配置される可能性のある位置を設定(パターン2)
+	{
+		int x, z;
+
+		x = 0;
+		z = 0;
+
+		for (int i = 0; i < 20; i++)
+		{
+			m_RandomBlockPoint[i].pos[0] = (D3DXVECTOR3(x * 3.0f + 2.0f, 0.0f, z * 3.0f));
+			m_RandomBlockPoint[i].pos[1] = (D3DXVECTOR3(x * 3.0f + 2.0f, 0.0f, z * 3.0f + 1.0f));
+			x++;
+			if (x % 4 == 0)
+			{
+				x = 0;
+				z++;
+			}
+		}
+		
+		x = 0;
+		z = 0;
+		for (int i = 20; i < 40; i++)
+		{
+			m_RandomBlockPoint[i].pos[0] = (D3DXVECTOR3(x * 3.0f, 0.0f, z * 3.0f +2.0f));
+			m_RandomBlockPoint[i].pos[1] = (D3DXVECTOR3(x * 3.0f + 1.0f, 0.0f, z * 3.0f + 2.0f));
+
+			z++;
+			if (z % 4 == 0)
+			{
+				z = 0;
+				x++;
+			}
+		}
+	}
+
 	// ブロックが配置される可能性のある位置を設定
 	{
 		int x, z;
@@ -319,7 +354,34 @@ void Game::MapCreate()
 		CreateFixedBlock();
 
 		// ブロック(ランダム)
-		CreateRandomBlock();
+		//CreateRandomBlock();
+
+		for (int i = 0; i < 64; i+=4)
+		{
+			RANDOM_BLOCK_POINT point = m_RandomBlockPoint[Random(0, 40)];
+
+			for (int x = 0; x < 64; x++)
+			{
+				if (x == i)break;
+
+				while (point.pos[0] == m_RandomBlock[x]->GetPosition())
+				{
+					point = m_RandomBlockPoint[Random(0, 40)];
+				}
+			}
+
+			m_RandomBlock[i] = AddGameObject<Block>(1);
+			m_RandomBlock[i]->SetPosition(D3DXVECTOR3(point.pos[0]));
+
+			m_RandomBlock[i + 1] = AddGameObject<Block>(1);
+			m_RandomBlock[i + 1]->SetPosition(D3DXVECTOR3(point.pos[0].x, 1.0f, point.pos[0].z));
+
+			m_RandomBlock[i + 2] = AddGameObject<Block>(1);
+			m_RandomBlock[i + 2]->SetPosition(D3DXVECTOR3(point.pos[1]));
+
+			m_RandomBlock[i + 3] = AddGameObject<Block>(1);
+			m_RandomBlock[i + 3]->SetPosition(D3DXVECTOR3(point.pos[1].x,1.0f,point.pos[1].z));
+		}
 
 		// エネミー パックンフラワーのような敵
 		if (m_Enemy[0] != NULL)
