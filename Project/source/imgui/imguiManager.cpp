@@ -96,6 +96,7 @@ void ImguiManager::StageScene()
 
     ImGui::PlotLines("", value, sizeof(value) / sizeof(float), 0, NULL, 0.0f, 100.0f, ImVec2(0, 50));*/
 
+    //imguiの値を更新
     vec4a[0] = player->GetPosition().x;
     vec4a[1] = player->GetPosition().y;
     vec4a[2] = player->GetPosition().z;
@@ -106,6 +107,7 @@ void ImguiManager::StageScene()
         ImGui::SameLine();
         ImGui::DragFloat3("##Position", vec4a, 1.0, 0.0, 0.0, "%3.1f");
 
+        //プレイヤーの値を更新
         player->SetPosition(vec4a);
 
         ImGui::Text("Rotation");
